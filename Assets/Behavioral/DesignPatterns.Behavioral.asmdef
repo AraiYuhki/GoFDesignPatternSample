@@ -1,0 +1,18 @@
+{
+    "name": "DesignPatterns.Behavioral",
+    "rootNamespace": "DesignPatterns.Behavioral",
+    "references": [
+        "DesignPatterns",
+        "Unity.TextMeshPro",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

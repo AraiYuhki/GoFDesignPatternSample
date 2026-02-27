@@ -1,0 +1,25 @@
+{
+    "name": "DesignPatterns.Tests.Editor",
+    "rootNamespace": "DesignPatterns.Tests",
+    "references": [
+        "DesignPatterns",
+        "DesignPatterns.Creational",
+        "DesignPatterns.Structural",
+        "DesignPatterns.Behavioral"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
