@@ -1,0 +1,2 @@
+# GoFDesignPatternSample
+GoFの23種類のデザインパターンを視覚的にわかりやすく説明するためのUnityプロジェクト
