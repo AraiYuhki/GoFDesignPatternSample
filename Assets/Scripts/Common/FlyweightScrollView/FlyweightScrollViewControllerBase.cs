@@ -305,7 +305,7 @@ namespace Xeon.Common.FlyweightScrollView
             this.verticalAlignment = verticalAlignment;
             if (layouter is HorizontalLayouter horizontalLayouter)
                 horizontalLayouter.SetAlignment(verticalAlignment);
-            foreach(var item in itemList)
+            foreach (var item in itemList)
                 item.SetVerticalAlignment(verticalAlignment);
         }
 
@@ -424,6 +424,10 @@ namespace Xeon.Common.FlyweightScrollView
         {
             if (ItemCount > itemList.Count)
                 return;
+
+            // データがアイテム数以下の場合、全データがビューに収まるため先頭から表示する
+            headIndex = 0;
+            tailIndex = Mathf.Max(0, ItemCount - 1);
 
             foreach (var (item, index) in itemList.Select((item, index) => (item, index)))
             {

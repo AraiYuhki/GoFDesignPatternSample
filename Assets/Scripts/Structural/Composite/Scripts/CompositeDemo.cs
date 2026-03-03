@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DesignPatterns.Structural.Composite {
+namespace DesignPatterns.Structural.Composite
+{
     /// <summary>
     /// Compositeパターンのデモシーンを制御するクラス
     ///
@@ -10,7 +11,8 @@ namespace DesignPatterns.Structural.Composite {
     /// - フォルダのサイズが子要素の合計として再帰的に計算されることを確認
     /// - ツリー構造の表示で再帰的な処理を体感
     /// </summary>
-    public sealed class CompositeDemo : PatternDemoBase {
+    public sealed class CompositeDemo : PatternDemoBase
+    {
         /// <summary>ツリー構造表示ボタン</summary>
         [SerializeField]
         private Button showTreeButton;
@@ -33,31 +35,38 @@ namespace DesignPatterns.Structural.Composite {
         private int fileCounter;
 
         /// <inheritdoc/>
-        protected override string PatternName {
+        protected override string PatternName
+        {
             get { return "Composite"; }
         }
 
         /// <inheritdoc/>
-        protected override PatternCategory Category {
+        protected override PatternCategory Category
+        {
             get { return PatternCategory.Structural; }
         }
 
         /// <inheritdoc/>
-        protected override string Description {
+        protected override string Description
+        {
             get { return "個々のオブジェクトとその集合を同一視し、ツリー構造で再帰的に操作する"; }
         }
 
         /// <inheritdoc/>
-        protected override void OnDemoStart() {
+        protected override void OnDemoStart()
+        {
             BuildFileTree();
 
-            if (showTreeButton != null) {
+            if (showTreeButton != null)
+            {
                 showTreeButton.onClick.AddListener(OnShowTree);
             }
-            if (calcSizeButton != null) {
+            if (calcSizeButton != null)
+            {
                 calcSizeButton.onClick.AddListener(OnCalcSize);
             }
-            if (addFileButton != null) {
+            if (addFileButton != null)
+            {
                 addFileButton.onClick.AddListener(OnAddFile);
             }
 
@@ -67,7 +76,8 @@ namespace DesignPatterns.Structural.Composite {
         /// <summary>
         /// サンプルのファイルツリーを構築する
         /// </summary>
-        private void BuildFileTree() {
+        private void BuildFileTree()
+        {
             root = new Folder("root");
 
             documentsFolder = new Folder("Documents");
@@ -91,7 +101,8 @@ namespace DesignPatterns.Structural.Composite {
         /// <summary>
         /// ツリー構造を表示する
         /// </summary>
-        private void OnShowTree() {
+        private void OnShowTree()
+        {
             InGameLogger.Log("=== ファイルツリー ===", LogColor.Yellow);
             root.Display("");
         }
@@ -99,7 +110,8 @@ namespace DesignPatterns.Structural.Composite {
         /// <summary>
         /// ルートのサイズを再帰的に計算する
         /// </summary>
-        private void OnCalcSize() {
+        private void OnCalcSize()
+        {
             InGameLogger.Log("=== サイズ計算（再帰） ===", LogColor.Yellow);
             InGameLogger.Log($"root全体のサイズ: {root.GetSize()} bytes", LogColor.Green);
             InGameLogger.Log("→ フォルダも単一ファイルも同じGetSize()で統一的に扱える", LogColor.Green);
@@ -108,7 +120,8 @@ namespace DesignPatterns.Structural.Composite {
         /// <summary>
         /// Documentsフォルダにファイルを追加する
         /// </summary>
-        private void OnAddFile() {
+        private void OnAddFile()
+        {
             fileCounter++;
             int size = 1024 * fileCounter;
             string fileName = $"new_file_{fileCounter}.txt";

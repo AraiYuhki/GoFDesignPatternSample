@@ -1,13 +1,15 @@
 using System.Text;
 
-namespace DesignPatterns.Creational.Builder {
+namespace DesignPatterns.Creational.Builder
+{
     /// <summary>
     /// ビルダーによって段階的に構築されるキャラクターデータ（Product）
     ///
     /// 【Builderパターンにおける役割】
     /// 複雑な構成要素を持つ最終的なプロダクト
     /// </summary>
-    public sealed class CharacterData {
+    public sealed class CharacterData
+    {
         /// <summary>キャラクター名</summary>
         public string Name { get; set; }
 
@@ -36,7 +38,8 @@ namespace DesignPatterns.Creational.Builder {
         /// キャラクターデータを文字列として返す
         /// </summary>
         /// <returns>キャラクターの詳細情報</returns>
-        public override string ToString() {
+        public override string ToString()
+        {
             var sb = new StringBuilder();
             sb.Append($"【{Name}】 職業: {Job}");
             sb.Append($"\n  武器: {Weapon} / 防具: {Armor}");

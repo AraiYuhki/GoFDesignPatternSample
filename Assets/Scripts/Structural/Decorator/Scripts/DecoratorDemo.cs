@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DesignPatterns.Structural.Decorator {
+namespace DesignPatterns.Structural.Decorator
+{
     /// <summary>
     /// Decoratorパターンのデモシーンを制御するクラス
     ///
@@ -10,7 +11,8 @@ namespace DesignPatterns.Structural.Decorator {
     /// - デコレーターを追加するごとに攻撃力が変化することを確認
     /// - 複数のデコレーターの積み重ねを体験
     /// </summary>
-    public sealed class DecoratorDemo : PatternDemoBase {
+    public sealed class DecoratorDemo : PatternDemoBase
+    {
         /// <summary>剣作成ボタン</summary>
         [SerializeField]
         private Button createSwordButton;
@@ -35,35 +37,44 @@ namespace DesignPatterns.Structural.Decorator {
         private IWeapon currentWeapon;
 
         /// <inheritdoc/>
-        protected override string PatternName {
+        protected override string PatternName
+        {
             get { return "Decorator"; }
         }
 
         /// <inheritdoc/>
-        protected override PatternCategory Category {
+        protected override PatternCategory Category
+        {
             get { return PatternCategory.Structural; }
         }
 
         /// <inheritdoc/>
-        protected override string Description {
+        protected override string Description
+        {
             get { return "オブジェクトに動的に機能を追加する。サブクラス化の代わりに柔軟な拡張を実現する"; }
         }
 
         /// <inheritdoc/>
-        protected override void OnDemoStart() {
-            if (createSwordButton != null) {
+        protected override void OnDemoStart()
+        {
+            if (createSwordButton != null)
+            {
                 createSwordButton.onClick.AddListener(OnCreateSword);
             }
-            if (createBowButton != null) {
+            if (createBowButton != null)
+            {
                 createBowButton.onClick.AddListener(OnCreateBow);
             }
-            if (addFireButton != null) {
+            if (addFireButton != null)
+            {
                 addFireButton.onClick.AddListener(OnAddFire);
             }
-            if (addIceButton != null) {
+            if (addIceButton != null)
+            {
                 addIceButton.onClick.AddListener(OnAddIce);
             }
-            if (addPoisonButton != null) {
+            if (addPoisonButton != null)
+            {
                 addPoisonButton.onClick.AddListener(OnAddPoison);
             }
 
@@ -71,21 +82,24 @@ namespace DesignPatterns.Structural.Decorator {
         }
 
         /// <summary>剣を作成する</summary>
-        private void OnCreateSword() {
+        private void OnCreateSword()
+        {
             currentWeapon = new Sword();
             InGameLogger.Log("--- 剣を作成 ---", LogColor.Yellow);
             InGameLogger.Log(currentWeapon.GetDescription(), LogColor.Green);
         }
 
         /// <summary>弓を作成する</summary>
-        private void OnCreateBow() {
+        private void OnCreateBow()
+        {
             currentWeapon = new Bow();
             InGameLogger.Log("--- 弓を作成 ---", LogColor.Yellow);
             InGameLogger.Log(currentWeapon.GetDescription(), LogColor.Green);
         }
 
         /// <summary>炎エンチャントを追加する</summary>
-        private void OnAddFire() {
+        private void OnAddFire()
+        {
             if (!HasWeapon()) { return; }
             currentWeapon = new FireEnchantment(currentWeapon);
             InGameLogger.Log("🔥 炎エンチャント追加!", LogColor.Yellow);
@@ -93,7 +107,8 @@ namespace DesignPatterns.Structural.Decorator {
         }
 
         /// <summary>氷エンチャントを追加する</summary>
-        private void OnAddIce() {
+        private void OnAddIce()
+        {
             if (!HasWeapon()) { return; }
             currentWeapon = new IceEnchantment(currentWeapon);
             InGameLogger.Log("❄️ 氷エンチャント追加!", LogColor.Yellow);
@@ -101,7 +116,8 @@ namespace DesignPatterns.Structural.Decorator {
         }
 
         /// <summary>毒エンチャントを追加する</summary>
-        private void OnAddPoison() {
+        private void OnAddPoison()
+        {
             if (!HasWeapon()) { return; }
             currentWeapon = new PoisonEnchantment(currentWeapon);
             InGameLogger.Log("☠️ 毒エンチャント追加!", LogColor.Yellow);
@@ -112,8 +128,10 @@ namespace DesignPatterns.Structural.Decorator {
         /// 武器が存在するかチェックする
         /// </summary>
         /// <returns>武器が存在すればtrue</returns>
-        private bool HasWeapon() {
-            if (currentWeapon == null) {
+        private bool HasWeapon()
+        {
+            if (currentWeapon == null)
+            {
                 InGameLogger.Log("まず武器を作成してください", LogColor.Red);
                 return false;
             }

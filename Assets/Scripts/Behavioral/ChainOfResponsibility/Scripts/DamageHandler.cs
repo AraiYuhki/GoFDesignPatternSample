@@ -1,10 +1,12 @@
-namespace DesignPatterns.Behavioral.ChainOfResponsibility {
+namespace DesignPatterns.Behavioral.ChainOfResponsibility
+{
     /// <summary>
     /// ダメージ処理の連鎖を構成する抽象ハンドラ
     /// Chain of Responsibilityパターンにおける「Handler」に相当する
     /// 各ハンドラはダメージを加工し、次のハンドラへ渡す
     /// </summary>
-    public abstract class DamageHandler {
+    public abstract class DamageHandler
+    {
         /// <summary>次のハンドラへの参照</summary>
         private DamageHandler nextHandler;
 
@@ -17,7 +19,8 @@ namespace DesignPatterns.Behavioral.ChainOfResponsibility {
         /// </summary>
         /// <param name="next">次のハンドラ</param>
         /// <returns>設定された次のハンドラ</returns>
-        public DamageHandler SetNext(DamageHandler next) {
+        public DamageHandler SetNext(DamageHandler next)
+        {
             nextHandler = next;
             return next;
         }
@@ -28,9 +31,11 @@ namespace DesignPatterns.Behavioral.ChainOfResponsibility {
         /// </summary>
         /// <param name="damage">受けたダメージ量</param>
         /// <returns>処理後のダメージ量</returns>
-        public int Handle(int damage) {
+        public int Handle(int damage)
+        {
             int processed = Process(damage);
-            if (nextHandler != null) {
+            if (nextHandler != null)
+            {
                 return nextHandler.Handle(processed);
             }
             return processed;
@@ -49,12 +54,14 @@ namespace DesignPatterns.Behavioral.ChainOfResponsibility {
     /// 防具によるダメージ軽減ハンドラ
     /// ダメージを30%カットする
     /// </summary>
-    public sealed class ArmorHandler : DamageHandler {
+    public sealed class ArmorHandler : DamageHandler
+    {
         /// <summary>防具によるダメージ軽減率</summary>
         private const float ReductionRate = 0.3f;
 
         /// <inheritdoc/>
-        public override string HandlerName {
+        public override string HandlerName
+        {
             get { return "Armor（防具）"; }
         }
 
@@ -63,7 +70,8 @@ namespace DesignPatterns.Behavioral.ChainOfResponsibility {
         /// </summary>
         /// <param name="damage">受けたダメージ量</param>
         /// <returns>軽減後のダメージ量</returns>
-        protected override int Process(int damage) {
+        protected override int Process(int damage)
+        {
             int reduced = (int)(damage * ReductionRate);
             int result = damage - reduced;
             InGameLogger.Log($"  [{HandlerName}] {damage} → {result} (30%カット: -{reduced})", LogColor.Orange);
@@ -75,12 +83,14 @@ namespace DesignPatterns.Behavioral.ChainOfResponsibility {
     /// 耐性によるダメージ軽減ハンドラ
     /// ダメージを固定値5だけ軽減する
     /// </summary>
-    public sealed class ResistanceHandler : DamageHandler {
+    public sealed class ResistanceHandler : DamageHandler
+    {
         /// <summary>耐性による固定ダメージ軽減値</summary>
         private const int FlatReduction = 5;
 
         /// <inheritdoc/>
-        public override string HandlerName {
+        public override string HandlerName
+        {
             get { return "Resistance（耐性）"; }
         }
 
@@ -89,9 +99,11 @@ namespace DesignPatterns.Behavioral.ChainOfResponsibility {
         /// </summary>
         /// <param name="damage">受けたダメージ量</param>
         /// <returns>軽減後のダメージ量</returns>
-        protected override int Process(int damage) {
+        protected override int Process(int damage)
+        {
             int result = damage - FlatReduction;
-            if (result < 0) {
+            if (result < 0)
+            {
                 result = 0;
             }
             InGameLogger.Log($"  [{HandlerName}] {damage} → {result} (固定軽減: -{FlatReduction})", LogColor.Orange);
@@ -103,12 +115,14 @@ namespace DesignPatterns.Behavioral.ChainOfResponsibility {
     /// 回避によるダメージ無効化ハンドラ
     /// 20%の確率でダメージを0にする
     /// </summary>
-    public sealed class DodgeHandler : DamageHandler {
+    public sealed class DodgeHandler : DamageHandler
+    {
         /// <summary>回避確率（0.0〜1.0）</summary>
         private const float DodgeChance = 0.2f;
 
         /// <inheritdoc/>
-        public override string HandlerName {
+        public override string HandlerName
+        {
             get { return "Dodge（回避）"; }
         }
 
@@ -117,9 +131,11 @@ namespace DesignPatterns.Behavioral.ChainOfResponsibility {
         /// </summary>
         /// <param name="damage">受けたダメージ量</param>
         /// <returns>回避成功時は0、失敗時は元のダメージ量</returns>
-        protected override int Process(int damage) {
+        protected override int Process(int damage)
+        {
             float roll = UnityEngine.Random.Range(0f, 1f);
-            if (roll < DodgeChance) {
+            if (roll < DodgeChance)
+            {
                 InGameLogger.Log($"  [{HandlerName}] 回避成功! {damage} → 0 (判定: {roll:F2} < {DodgeChance})", LogColor.Yellow);
                 return 0;
             }

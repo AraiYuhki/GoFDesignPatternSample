@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DesignPatterns.Structural.Adapter {
+namespace DesignPatterns.Structural.Adapter
+{
     /// <summary>
     /// Adapterパターンのデモシーンを制御するクラス
     ///
@@ -10,7 +11,8 @@ namespace DesignPatterns.Structural.Adapter {
     /// - メソッド名・引数の変換過程をログで可視化
     /// - アダプターが仲介することで互換性のないシステムが連携することを確認
     /// </summary>
-    public sealed class AdapterDemo : PatternDemoBase {
+    public sealed class AdapterDemo : PatternDemoBase
+    {
         /// <summary>バトルBGM再生ボタン</summary>
         [SerializeField]
         private Button playBattleButton;
@@ -31,35 +33,43 @@ namespace DesignPatterns.Structural.Adapter {
         private IModernAudio audioSystem;
 
         /// <inheritdoc/>
-        protected override string PatternName {
+        protected override string PatternName
+        {
             get { return "Adapter"; }
         }
 
         /// <inheritdoc/>
-        protected override PatternCategory Category {
+        protected override PatternCategory Category
+        {
             get { return PatternCategory.Structural; }
         }
 
         /// <inheritdoc/>
-        protected override string Description {
+        protected override string Description
+        {
             get { return "互換性のないインターフェースを持つクラスを、既存のインターフェースに適合させる"; }
         }
 
         /// <inheritdoc/>
-        protected override void OnDemoStart() {
+        protected override void OnDemoStart()
+        {
             var legacySystem = new LegacySoundSystem();
             audioSystem = new SoundAdapter(legacySystem);
 
-            if (playBattleButton != null) {
+            if (playBattleButton != null)
+            {
                 playBattleButton.onClick.AddListener(OnPlayBattle);
             }
-            if (playFieldButton != null) {
+            if (playFieldButton != null)
+            {
                 playFieldButton.onClick.AddListener(OnPlayField);
             }
-            if (stopButton != null) {
+            if (stopButton != null)
+            {
                 stopButton.onClick.AddListener(OnStop);
             }
-            if (statusButton != null) {
+            if (statusButton != null)
+            {
                 statusButton.onClick.AddListener(OnCheckStatus);
             }
 
@@ -69,7 +79,8 @@ namespace DesignPatterns.Structural.Adapter {
         /// <summary>
         /// バトルBGMを再生する
         /// </summary>
-        private void OnPlayBattle() {
+        private void OnPlayBattle()
+        {
             InGameLogger.Log("--- バトルBGM再生 ---", LogColor.Yellow);
             audioSystem.Play("BGM_Battle", 0.8f);
         }
@@ -77,7 +88,8 @@ namespace DesignPatterns.Structural.Adapter {
         /// <summary>
         /// フィールドBGMを再生する
         /// </summary>
-        private void OnPlayField() {
+        private void OnPlayField()
+        {
             InGameLogger.Log("--- フィールドBGM再生 ---", LogColor.Yellow);
             audioSystem.Play("BGM_Field", 0.6f);
         }
@@ -85,7 +97,8 @@ namespace DesignPatterns.Structural.Adapter {
         /// <summary>
         /// 再生を停止する
         /// </summary>
-        private void OnStop() {
+        private void OnStop()
+        {
             InGameLogger.Log("--- 停止 ---", LogColor.Yellow);
             audioSystem.Stop();
         }
@@ -93,7 +106,8 @@ namespace DesignPatterns.Structural.Adapter {
         /// <summary>
         /// 現在のステータスを確認する
         /// </summary>
-        private void OnCheckStatus() {
+        private void OnCheckStatus()
+        {
             string status = audioSystem.GetStatus();
             InGameLogger.Log($"状態: {status}", LogColor.Green);
         }

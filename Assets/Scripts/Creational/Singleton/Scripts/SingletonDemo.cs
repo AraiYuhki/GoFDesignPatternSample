@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DesignPatterns.Creational.Singleton {
+namespace DesignPatterns.Creational.Singleton
+{
     /// <summary>
     /// Singletonパターンのデモシーンを制御するクラス
     ///
@@ -10,7 +11,8 @@ namespace DesignPatterns.Creational.Singleton {
     /// - 複数のコンポーネントから同一インスタンスへアクセスできることを確認
     /// - スコアの加算・リセット操作でSingletonの動作を体験
     /// </summary>
-    public sealed class SingletonDemo : PatternDemoBase {
+    public sealed class SingletonDemo : PatternDemoBase
+    {
         /// <summary>GameManagerプレハブ（生成テスト用）</summary>
         [SerializeField]
         private GameObject gameManagerPrefab;
@@ -35,34 +37,28 @@ namespace DesignPatterns.Creational.Singleton {
         private const int ScoreIncrement = 10;
 
         /// <inheritdoc/>
-        protected override string PatternName {
-            get { return "Singleton"; }
-        }
+        protected override string PatternName => "Singleton";
 
         /// <inheritdoc/>
-        protected override PatternCategory Category {
-            get { return PatternCategory.Creational; }
-        }
+        protected override PatternCategory Category => PatternCategory.Creational;
 
         /// <inheritdoc/>
-        protected override string Description {
-            get { return "クラスのインスタンスが1つだけ存在することを保証し、グローバルなアクセスポイントを提供する"; }
-        }
+        protected override string Description => "クラスのインスタンスが1つだけ存在することを保証し、グローバルなアクセスポイントを提供する";
 
         /// <inheritdoc/>
-        protected override void OnDemoStart() {
-            if (addScoreButton != null) {
+        protected override void OnDemoStart()
+        {
+            if (addScoreButton != null)
                 addScoreButton.onClick.AddListener(OnAddScore);
-            }
-            if (resetScoreButton != null) {
+
+            if (resetScoreButton != null)
                 resetScoreButton.onClick.AddListener(OnResetScore);
-            }
-            if (duplicateTestButton != null) {
+
+            if (duplicateTestButton != null)
                 duplicateTestButton.onClick.AddListener(OnDuplicateTest);
-            }
-            if (checkInstanceButton != null) {
-                checkInstanceButton.onClick.AddListener(OnCheckInstance);
-            }
+
+            if (checkInstanceButton != null)
+                checkInstanceButton?.onClick.AddListener(OnCheckInstance);
 
             InGameLogger.Log("ボタンを押してSingletonの動作を確認してください", LogColor.Yellow);
         }
@@ -70,63 +66,64 @@ namespace DesignPatterns.Creational.Singleton {
         /// <summary>
         /// スコアを加算する
         /// </summary>
-        private void OnAddScore() {
-            if (GameManager.Instance != null) {
+        private void OnAddScore()
+        {
+            if (GameManager.Instance != null)
+            {
                 GameManager.Instance.AddScore(ScoreIncrement);
-            } else {
-                InGameLogger.Log("[エラー] GameManagerのインスタンスが存在しません", LogColor.Red);
+                return;
             }
+            InGameLogger.Log("[エラー] GameManagerのインスタンスが存在しません", LogColor.Red);
         }
 
         /// <summary>
         /// スコアをリセットする
         /// </summary>
-        private void OnResetScore() {
-            if (GameManager.Instance != null) {
+        private void OnResetScore()
+        {
+            if (GameManager.Instance != null)
+            {
                 GameManager.Instance.ResetScore();
-            } else {
-                InGameLogger.Log("[エラー] GameManagerのインスタンスが存在しません", LogColor.Red);
+                return;
             }
+
+            InGameLogger.Log("[エラー] GameManagerのインスタンスが存在しません", LogColor.Red);
         }
 
         /// <summary>
         /// 重複インスタンスの生成を試みる
         /// Singletonにより2つ目は破棄されることを確認する
         /// </summary>
-        private void OnDuplicateTest() {
+        private void OnDuplicateTest()
+        {
             InGameLogger.Log("--- 重複生成テスト ---", LogColor.Yellow);
             InGameLogger.Log("新しいGameManagerの生成を試みます...", LogColor.White);
 
-            if (gameManagerPrefab != null) {
+            if (gameManagerPrefab != null)
+            {
                 Instantiate(gameManagerPrefab);
-            } else {
-                var duplicate = new GameObject("GameManager_Duplicate");
-                duplicate.AddComponent<GameManager>();
+                return;
             }
+
+            var duplicate = new GameObject("GameManager_Duplicate");
+            duplicate.AddComponent<GameManager>();
         }
 
         /// <summary>
         /// 現在のSingletonインスタンスの状態を確認する
         /// </summary>
-        private void OnCheckInstance() {
+        private void OnCheckInstance()
+        {
             InGameLogger.Log("--- インスタンス確認 ---", LogColor.Yellow);
 
-            if (GameManager.Instance != null) {
-                InGameLogger.Log(
-                    $"インスタンス: 存在する (ID: {GameManager.Instance.GetInstanceID()})",
-                    LogColor.Blue
-                );
-                InGameLogger.Log(
-                    $"現在のスコア: {GameManager.Instance.Score}",
-                    LogColor.Blue
-                );
-                InGameLogger.Log(
-                    $"生成試行回数: {GameManager.CreationAttemptCount}",
-                    LogColor.Blue
-                );
-            } else {
-                InGameLogger.Log("インスタンス: 存在しない", LogColor.Red);
+            if (GameManager.Instance != null)
+            {
+                InGameLogger.Log($"インスタンス: 存在する (ID: {GameManager.Instance.GetInstanceID()})", LogColor.Blue);
+                InGameLogger.Log($"現在のスコア: {GameManager.Instance.Score}", LogColor.Blue);
+                InGameLogger.Log($"生成試行回数: {GameManager.CreationAttemptCount}", LogColor.Blue);
+                return;
             }
+            InGameLogger.Log("インスタンス: 存在しない", LogColor.Red);
         }
     }
 }

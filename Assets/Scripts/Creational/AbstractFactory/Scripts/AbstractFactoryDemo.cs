@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DesignPatterns.Creational.AbstractFactory {
+namespace DesignPatterns.Creational.AbstractFactory
+{
     /// <summary>
     /// Abstract Factoryパターンのデモシーンを制御するクラス
     ///
@@ -10,7 +11,8 @@ namespace DesignPatterns.Creational.AbstractFactory {
     /// - ファクトリを切り替えるだけで関連するUI部品が一括で変更されることを確認
     /// - 各ファクトリが一貫性のある色のセットを生成することを体験
     /// </summary>
-    public sealed class AbstractFactoryDemo : PatternDemoBase {
+    public sealed class AbstractFactoryDemo : PatternDemoBase
+    {
         /// <summary>テーマが適用されるサンプルパネル</summary>
         [SerializeField]
         private Image samplePanel;
@@ -32,29 +34,36 @@ namespace DesignPatterns.Creational.AbstractFactory {
         private Button retroThemeButton;
 
         /// <inheritdoc/>
-        protected override string PatternName {
+        protected override string PatternName
+        {
             get { return "Abstract Factory"; }
         }
 
         /// <inheritdoc/>
-        protected override PatternCategory Category {
+        protected override PatternCategory Category
+        {
             get { return PatternCategory.Creational; }
         }
 
         /// <inheritdoc/>
-        protected override string Description {
+        protected override string Description
+        {
             get { return "関連するオブジェクト群を、具象クラスを指定せずに生成するインターフェースを提供する"; }
         }
 
         /// <inheritdoc/>
-        protected override void OnDemoStart() {
-            if (darkThemeButton != null) {
+        protected override void OnDemoStart()
+        {
+            if (darkThemeButton != null)
+            {
                 darkThemeButton.onClick.AddListener(() => ApplyTheme(new DarkThemeFactory()));
             }
-            if (lightThemeButton != null) {
+            if (lightThemeButton != null)
+            {
                 lightThemeButton.onClick.AddListener(() => ApplyTheme(new LightThemeFactory()));
             }
-            if (retroThemeButton != null) {
+            if (retroThemeButton != null)
+            {
                 retroThemeButton.onClick.AddListener(() => ApplyTheme(new RetroThemeFactory()));
             }
 
@@ -65,7 +74,8 @@ namespace DesignPatterns.Creational.AbstractFactory {
         /// 指定されたテーマファクトリを使ってUIを更新する
         /// </summary>
         /// <param name="factory">適用するテーマファクトリ</param>
-        private void ApplyTheme(IThemeFactory factory) {
+        private void ApplyTheme(IThemeFactory factory)
+        {
             InGameLogger.Log($"--- {factory.ThemeName} を適用 ---", LogColor.Yellow);
 
             Color backgroundColor = factory.CreateBackgroundColor();
@@ -73,14 +83,18 @@ namespace DesignPatterns.Creational.AbstractFactory {
             Color textColor = factory.CreateTextColor();
             Color accentColor = factory.CreateAccentColor();
 
-            if (samplePanel != null) {
+            if (samplePanel != null)
+            {
                 samplePanel.color = backgroundColor;
                 InGameLogger.Log($"背景色を設定: {ColorToHex(backgroundColor)}", LogColor.Blue);
             }
 
-            if (sampleButtons != null) {
-                for (int i = 0; i < sampleButtons.Length; i++) {
-                    if (sampleButtons[i] != null) {
+            if (sampleButtons != null)
+            {
+                for (int i = 0; i < sampleButtons.Length; i++)
+                {
+                    if (sampleButtons[i] != null)
+                    {
                         sampleButtons[i].color = buttonColor;
                     }
                 }
@@ -97,7 +111,8 @@ namespace DesignPatterns.Creational.AbstractFactory {
         /// </summary>
         /// <param name="color">変換する色</param>
         /// <returns>16進数カラーコード</returns>
-        private static string ColorToHex(Color color) {
+        private static string ColorToHex(Color color)
+        {
             return $"#{ColorUtility.ToHtmlStringRGB(color)}";
         }
     }

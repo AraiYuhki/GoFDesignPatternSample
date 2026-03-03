@@ -1,11 +1,13 @@
 using UnityEngine;
 
-namespace DesignPatterns {
+namespace DesignPatterns
+{
     /// <summary>
     /// 各デザインパターンのデモシーンで使用する基底クラス
     /// パターン情報の表示とログの初期化を共通化する
     /// </summary>
-    public abstract class PatternDemoBase : MonoBehaviour {
+    public abstract class PatternDemoBase : MonoBehaviour
+    {
         /// <summary>パターン情報を表示するパネル</summary>
         [SerializeField]
         private PatternInfoPanel infoPanel;
@@ -22,9 +24,12 @@ namespace DesignPatterns {
         /// <summary>
         /// カテゴリに対応するログの色を返す
         /// </summary>
-        protected LogColor CategoryColor {
-            get {
-                switch (Category) {
+        protected LogColor CategoryColor
+        {
+            get
+            {
+                switch (Category)
+                {
                     case PatternCategory.Creational:
                         return LogColor.Blue;
                     case PatternCategory.Structural:
@@ -37,7 +42,8 @@ namespace DesignPatterns {
             }
         }
 
-        protected virtual void Start() {
+        protected virtual void Start()
+        {
             InitializeDemo();
         }
 
@@ -45,8 +51,10 @@ namespace DesignPatterns {
         /// デモの初期化処理を行う
         /// パターン情報パネルの設定とウェルカムログを表示する
         /// </summary>
-        private void InitializeDemo() {
-            if (infoPanel != null) {
+        private void InitializeDemo()
+        {
+            if (infoPanel != null)
+            {
                 infoPanel.SetInfo(PatternName, GetCategoryDisplayName(), Description);
             }
 
@@ -62,15 +70,18 @@ namespace DesignPatterns {
         /// デモ固有の初期化処理
         /// サブクラスでオーバーライドして使用する
         /// </summary>
-        protected virtual void OnDemoStart() {
+        protected virtual void OnDemoStart()
+        {
         }
 
         /// <summary>
         /// カテゴリの表示名を返す
         /// </summary>
         /// <returns>カテゴリの日本語表示名</returns>
-        private string GetCategoryDisplayName() {
-            switch (Category) {
+        private string GetCategoryDisplayName()
+        {
+            switch (Category)
+            {
                 case PatternCategory.Creational:
                     return "生成パターン (Creational)";
                 case PatternCategory.Structural:

@@ -1,9 +1,11 @@
-namespace DesignPatterns.Behavioral.Interpreter {
+namespace DesignPatterns.Behavioral.Interpreter
+{
     /// <summary>
     /// コマンド文字列を解析してIExpressionに変換するパーサー
     /// "MOVE UP 3", "STATUS", "REPEAT 3 MOVE RIGHT 1" などの文字列を解釈する
     /// </summary>
-    public static class CommandParser {
+    public static class CommandParser
+    {
         /// <summary>MOVEコマンドのキーワード</summary>
         private const string MoveKeyword = "MOVE";
 
@@ -18,13 +20,16 @@ namespace DesignPatterns.Behavioral.Interpreter {
         /// </summary>
         /// <param name="commandText">コマンド文字列</param>
         /// <returns>解析されたIExpression、解析失敗時はnull</returns>
-        public static IExpression Parse(string commandText) {
-            if (string.IsNullOrEmpty(commandText)) {
+        public static IExpression Parse(string commandText)
+        {
+            if (string.IsNullOrEmpty(commandText))
+            {
                 return null;
             }
 
             string[] tokens = commandText.Trim().Split(' ');
-            if (tokens.Length == 0) {
+            if (tokens.Length == 0)
+            {
                 return null;
             }
 
@@ -37,22 +42,27 @@ namespace DesignPatterns.Behavioral.Interpreter {
         /// <param name="tokens">トークン配列</param>
         /// <param name="startIndex">解析開始位置</param>
         /// <returns>解析されたIExpression、解析失敗時はnull</returns>
-        private static IExpression ParseTokens(string[] tokens, int startIndex) {
-            if (startIndex >= tokens.Length) {
+        private static IExpression ParseTokens(string[] tokens, int startIndex)
+        {
+            if (startIndex >= tokens.Length)
+            {
                 return null;
             }
 
             string keyword = tokens[startIndex];
 
-            if (keyword == MoveKeyword) {
+            if (keyword == MoveKeyword)
+            {
                 return ParseMove(tokens, startIndex);
             }
 
-            if (keyword == StatusKeyword) {
+            if (keyword == StatusKeyword)
+            {
                 return new StatusExpression();
             }
 
-            if (keyword == RepeatKeyword) {
+            if (keyword == RepeatKeyword)
+            {
                 return ParseRepeat(tokens, startIndex);
             }
 
@@ -66,17 +76,20 @@ namespace DesignPatterns.Behavioral.Interpreter {
         /// <param name="tokens">トークン配列</param>
         /// <param name="startIndex">MOVEキーワードの位置</param>
         /// <returns>解析されたMoveExpression、解析失敗時はnull</returns>
-        private static MoveExpression ParseMove(string[] tokens, int startIndex) {
+        private static MoveExpression ParseMove(string[] tokens, int startIndex)
+        {
             int directionIndex = startIndex + 1;
             int distanceIndex = startIndex + 2;
 
-            if (distanceIndex >= tokens.Length) {
+            if (distanceIndex >= tokens.Length)
+            {
                 return null;
             }
 
             string direction = tokens[directionIndex];
             int distance;
-            if (!int.TryParse(tokens[distanceIndex], out distance)) {
+            if (!int.TryParse(tokens[distanceIndex], out distance))
+            {
                 return null;
             }
 
@@ -90,21 +103,25 @@ namespace DesignPatterns.Behavioral.Interpreter {
         /// <param name="tokens">トークン配列</param>
         /// <param name="startIndex">REPEATキーワードの位置</param>
         /// <returns>解析されたRepeatExpression、解析失敗時はnull</returns>
-        private static RepeatExpression ParseRepeat(string[] tokens, int startIndex) {
+        private static RepeatExpression ParseRepeat(string[] tokens, int startIndex)
+        {
             int countIndex = startIndex + 1;
             int innerStartIndex = startIndex + 2;
 
-            if (countIndex >= tokens.Length) {
+            if (countIndex >= tokens.Length)
+            {
                 return null;
             }
 
             int count;
-            if (!int.TryParse(tokens[countIndex], out count)) {
+            if (!int.TryParse(tokens[countIndex], out count))
+            {
                 return null;
             }
 
             IExpression innerExpression = ParseTokens(tokens, innerStartIndex);
-            if (innerExpression == null) {
+            if (innerExpression == null)
+            {
                 return null;
             }
 

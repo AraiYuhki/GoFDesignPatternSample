@@ -1,6 +1,7 @@
 using UnityEngine;
 
-namespace DesignPatterns.Creational.Singleton {
+namespace DesignPatterns.Creational.Singleton
+{
     /// <summary>
     /// Singletonパターンを適用したGameManager
     /// アプリケーション全体で唯一のインスタンスを保証し、
@@ -10,7 +11,8 @@ namespace DesignPatterns.Creational.Singleton {
     /// クラスのインスタンスが1つしか存在しないことを保証し、
     /// そのインスタンスへのグローバルなアクセス手段を提供する
     /// </summary>
-    public sealed class GameManager : MonoBehaviour {
+    public sealed class GameManager : MonoBehaviour
+    {
         /// <summary>唯一のインスタンスへの参照</summary>
         private static GameManager instance;
 
@@ -24,45 +26,37 @@ namespace DesignPatterns.Creational.Singleton {
         /// Singletonインスタンスを取得する
         /// インスタンスが存在しない場合はnullを返す
         /// </summary>
-        public static GameManager Instance {
-            get { return instance; }
-        }
+        public static GameManager Instance => instance;
 
         /// <summary>
         /// 現在のスコアを取得する
         /// </summary>
-        public int Score {
-            get { return score; }
-        }
+        public int Score => score;
 
         /// <summary>
         /// インスタンスの生成試行回数を取得する
         /// </summary>
-        public static int CreationAttemptCount {
-            get { return creationAttemptCount; }
-        }
+        public static int CreationAttemptCount => creationAttemptCount;
 
-        private void Awake() {
+        private void Awake()
+        {
             creationAttemptCount++;
 
-            if (instance != null && instance != this) {
-                InGameLogger.Log(
-                    $"[Singleton] 2つ目のGameManagerが検出されました（試行 #{creationAttemptCount}）→ 破棄します",
-                    LogColor.Red
-                );
+            if (instance != null && instance != this)
+            {
+                InGameLogger.Log($"[Singleton] 2つ目のGameManagerが検出されました（試行 #{creationAttemptCount}）→ 破棄します", LogColor.Red);
                 Destroy(gameObject);
                 return;
             }
 
             instance = this;
-            InGameLogger.Log(
-                $"[Singleton] GameManagerインスタンスを生成しました（試行 #{creationAttemptCount}）",
-                LogColor.Blue
-            );
+            InGameLogger.Log($"[Singleton] GameManagerインスタンスを生成しました（試行 #{creationAttemptCount}）", LogColor.Blue);
         }
 
-        private void OnDestroy() {
-            if (instance == this) {
+        private void OnDestroy()
+        {
+            if (instance == this)
+            {
                 instance = null;
             }
         }
@@ -71,18 +65,17 @@ namespace DesignPatterns.Creational.Singleton {
         /// スコアを加算する
         /// </summary>
         /// <param name="amount">加算する値</param>
-        public void AddScore(int amount) {
+        public void AddScore(int amount)
+        {
             score += amount;
-            InGameLogger.Log(
-                $"[Singleton] スコア +{amount} → 合計: {score}",
-                LogColor.Blue
-            );
+            InGameLogger.Log($"[Singleton] スコア +{amount} → 合計: {score}", LogColor.Blue);
         }
 
         /// <summary>
         /// スコアをリセットする
         /// </summary>
-        public void ResetScore() {
+        public void ResetScore()
+        {
             score = 0;
             InGameLogger.Log("[Singleton] スコアをリセットしました", LogColor.Blue);
         }

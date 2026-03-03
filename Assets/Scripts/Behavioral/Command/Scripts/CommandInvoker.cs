@@ -1,13 +1,15 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DesignPatterns.Behavioral.Command {
+namespace DesignPatterns.Behavioral.Command
+{
     /// <summary>
     /// コマンドの実行・取り消し・再実行を管理するInvokerクラス
     /// Commandパターンにおける「Invoker」に相当する
     /// コマンド履歴を保持し、Undo/Redo機能を提供する
     /// </summary>
-    public sealed class CommandInvoker {
+    public sealed class CommandInvoker
+    {
         /// <summary>実行済みコマンドの履歴</summary>
         private readonly List<ICommand> history = new List<ICommand>();
 
@@ -22,7 +24,8 @@ namespace DesignPatterns.Behavioral.Command {
         /// 新しいコマンドを実行するとRedoスタックはクリアされる
         /// </summary>
         /// <param name="command">実行するコマンド</param>
-        public void ExecuteCommand(ICommand command) {
+        public void ExecuteCommand(ICommand command)
+        {
             command.Execute();
             history.Add(command);
             redoStack.Clear();
@@ -32,8 +35,10 @@ namespace DesignPatterns.Behavioral.Command {
         /// 最後に実行したコマンドを取り消す
         /// 取り消したコマンドはRedoスタックに移動する
         /// </summary>
-        public void Undo() {
-            if (history.Count == 0) {
+        public void Undo()
+        {
+            if (history.Count == 0)
+            {
                 InGameLogger.Log("  取り消せるコマンドがありません", LogColor.Red);
                 return;
             }
@@ -50,8 +55,10 @@ namespace DesignPatterns.Behavioral.Command {
         /// 最後に取り消したコマンドを再実行する
         /// 再実行したコマンドは履歴に戻される
         /// </summary>
-        public void Redo() {
-            if (redoStack.Count == 0) {
+        public void Redo()
+        {
+            if (redoStack.Count == 0)
+            {
                 InGameLogger.Log("  やり直せるコマンドがありません", LogColor.Red);
                 return;
             }
@@ -68,15 +75,19 @@ namespace DesignPatterns.Behavioral.Command {
         /// コマンド履歴のログ文字列を生成して返す
         /// </summary>
         /// <returns>履歴の一覧テキスト</returns>
-        public string GetHistoryLog() {
-            if (history.Count == 0) {
+        public string GetHistoryLog()
+        {
+            if (history.Count == 0)
+            {
                 return "履歴なし";
             }
 
             logBuilder.Clear();
             logBuilder.Append("履歴: ");
-            for (int i = 0; i < history.Count; i++) {
-                if (i > 0) {
+            for (int i = 0; i < history.Count; i++)
+            {
+                if (i > 0)
+                {
                     logBuilder.Append(" → ");
                 }
                 logBuilder.Append(history[i].Description);

@@ -1,9 +1,11 @@
-namespace DesignPatterns.Creational.FactoryMethod {
+namespace DesignPatterns.Creational.FactoryMethod
+{
     /// <summary>
     /// スライム（ConcreteProduct）
     /// 弱いが数が多い敵
     /// </summary>
-    public sealed class Slime : IEnemy {
+    public sealed class Slime : IEnemy
+    {
         /// <inheritdoc/>
         public string Name { get { return "スライム"; } }
 
@@ -14,7 +16,8 @@ namespace DesignPatterns.Creational.FactoryMethod {
         public int Attack { get { return 5; } }
 
         /// <inheritdoc/>
-        public string PerformAttack() {
+        public string PerformAttack()
+        {
             return $"{Name}の体当たり！（{Attack}ダメージ）";
         }
     }
@@ -23,7 +26,8 @@ namespace DesignPatterns.Creational.FactoryMethod {
     /// ゴブリン（ConcreteProduct）
     /// バランスの取れた中堅の敵
     /// </summary>
-    public sealed class Goblin : IEnemy {
+    public sealed class Goblin : IEnemy
+    {
         /// <inheritdoc/>
         public string Name { get { return "ゴブリン"; } }
 
@@ -34,7 +38,8 @@ namespace DesignPatterns.Creational.FactoryMethod {
         public int Attack { get { return 15; } }
 
         /// <inheritdoc/>
-        public string PerformAttack() {
+        public string PerformAttack()
+        {
             return $"{Name}の棍棒攻撃！（{Attack}ダメージ）";
         }
     }
@@ -43,7 +48,8 @@ namespace DesignPatterns.Creational.FactoryMethod {
     /// ドラゴン（ConcreteProduct）
     /// 強力なボス級の敵
     /// </summary>
-    public sealed class Dragon : IEnemy {
+    public sealed class Dragon : IEnemy
+    {
         /// <inheritdoc/>
         public string Name { get { return "ドラゴン"; } }
 
@@ -54,7 +60,8 @@ namespace DesignPatterns.Creational.FactoryMethod {
         public int Attack { get { return 50; } }
 
         /// <inheritdoc/>
-        public string PerformAttack() {
+        public string PerformAttack()
+        {
             return $"{Name}のブレス攻撃！（{Attack}ダメージ）";
         }
     }

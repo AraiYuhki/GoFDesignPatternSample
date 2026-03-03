@@ -1,0 +1,6 @@
+﻿<Solution>
+  <Project Path="DesignPatterns.Creational.csproj" />
+  <Project Path="DesignPatterns.Structural.csproj" />
+  <Project Path="DesignPatterns.Behavioral.csproj" />
+  <Project Path="DesignPatterns.csproj" />
+</Solution>

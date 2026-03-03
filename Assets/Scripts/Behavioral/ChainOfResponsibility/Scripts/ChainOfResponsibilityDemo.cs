@@ -2,7 +2,8 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DesignPatterns.Behavioral.ChainOfResponsibility {
+namespace DesignPatterns.Behavioral.ChainOfResponsibility
+{
     /// <summary>
     /// Chain of Responsibilityパターンのデモシーンを制御するクラス
     ///
@@ -11,7 +12,8 @@ namespace DesignPatterns.Behavioral.ChainOfResponsibility {
     /// - 各ハンドラがダメージを軽減する様子をログで確認できる
     /// - 異なるダメージ量で連鎖処理の効果を比較できる
     /// </summary>
-    public sealed class ChainOfResponsibilityDemo : PatternDemoBase {
+    public sealed class ChainOfResponsibilityDemo : PatternDemoBase
+    {
         /// <summary>ダメージ10の攻撃ボタン</summary>
         [SerializeField]
         private Button attack10Button;
@@ -44,34 +46,42 @@ namespace DesignPatterns.Behavioral.ChainOfResponsibility {
         private readonly StringBuilder logBuilder = new StringBuilder();
 
         /// <inheritdoc/>
-        protected override string PatternName {
+        protected override string PatternName
+        {
             get { return "Chain of Responsibility"; }
         }
 
         /// <inheritdoc/>
-        protected override PatternCategory Category {
+        protected override PatternCategory Category
+        {
             get { return PatternCategory.Behavioral; }
         }
 
         /// <inheritdoc/>
-        protected override string Description {
+        protected override string Description
+        {
             get { return "要求を処理するオブジェクトの連鎖を作り、要求を順次処理する"; }
         }
 
         /// <inheritdoc/>
-        protected override void OnDemoStart() {
+        protected override void OnDemoStart()
+        {
             BuildChain();
 
-            if (attack10Button != null) {
+            if (attack10Button != null)
+            {
                 attack10Button.onClick.AddListener(OnAttack10);
             }
-            if (attack30Button != null) {
+            if (attack30Button != null)
+            {
                 attack30Button.onClick.AddListener(OnAttack30);
             }
-            if (attack100Button != null) {
+            if (attack100Button != null)
+            {
                 attack100Button.onClick.AddListener(OnAttack100);
             }
-            if (showChainButton != null) {
+            if (showChainButton != null)
+            {
                 showChainButton.onClick.AddListener(OnShowChain);
             }
 
@@ -82,7 +92,8 @@ namespace DesignPatterns.Behavioral.ChainOfResponsibility {
         /// ダメージ処理チェーンを構築する
         /// Dodge → Armor → Resistance の順にハンドラを連結する
         /// </summary>
-        private void BuildChain() {
+        private void BuildChain()
+        {
             dodgeHandler = new DodgeHandler();
             armorHandler = new ArmorHandler();
             resistanceHandler = new ResistanceHandler();
@@ -92,17 +103,20 @@ namespace DesignPatterns.Behavioral.ChainOfResponsibility {
         }
 
         /// <summary>ダメージ10の攻撃を実行する</summary>
-        private void OnAttack10() {
+        private void OnAttack10()
+        {
             ProcessAttack(10);
         }
 
         /// <summary>ダメージ30の攻撃を実行する</summary>
-        private void OnAttack30() {
+        private void OnAttack30()
+        {
             ProcessAttack(30);
         }
 
         /// <summary>ダメージ100の攻撃を実行する</summary>
-        private void OnAttack100() {
+        private void OnAttack100()
+        {
             ProcessAttack(100);
         }
 
@@ -110,7 +124,8 @@ namespace DesignPatterns.Behavioral.ChainOfResponsibility {
         /// 攻撃ダメージをチェーンで処理し、結果をログに表示する
         /// </summary>
         /// <param name="damage">元のダメージ量</param>
-        private void ProcessAttack(int damage) {
+        private void ProcessAttack(int damage)
+        {
             InGameLogger.Log($"--- 攻撃! 元ダメージ: {damage} ---", LogColor.Yellow);
             int finalDamage = chainHead.Handle(damage);
             InGameLogger.Log($"  最終ダメージ: {finalDamage} ({damage} → {finalDamage})", CategoryColor);
@@ -119,7 +134,8 @@ namespace DesignPatterns.Behavioral.ChainOfResponsibility {
         /// <summary>
         /// 現在のチェーン構成をログに表示する
         /// </summary>
-        private void OnShowChain() {
+        private void OnShowChain()
+        {
             InGameLogger.Log("--- チェーン構成 ---", LogColor.Yellow);
             logBuilder.Clear();
             logBuilder.Append("  ");

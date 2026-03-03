@@ -1,4 +1,5 @@
-namespace DesignPatterns.Creational.Builder {
+namespace DesignPatterns.Creational.Builder
+{
     /// <summary>
     /// キャラクター構築の手順を定義するインターフェース（Builder）
     ///
@@ -6,7 +7,8 @@ namespace DesignPatterns.Creational.Builder {
     /// プロダクトの各部品を生成するための抽象インターフェース
     /// 具象ビルダーがこのインターフェースを実装し、具体的な構築処理を提供する
     /// </summary>
-    public interface ICharacterBuilder {
+    public interface ICharacterBuilder
+    {
         /// <summary>ビルダーの名前</summary>
         string BuilderName { get; }
 

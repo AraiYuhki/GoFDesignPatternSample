@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DesignPatterns.Behavioral.Command {
+namespace DesignPatterns.Behavioral.Command
+{
     /// <summary>
     /// Commandパターンのデモシーンを制御するクラス
     ///
@@ -11,7 +12,8 @@ namespace DesignPatterns.Behavioral.Command {
     /// - Redoで取り消したコマンドを再実行
     /// - コマンド履歴の確認
     /// </summary>
-    public sealed class CommandDemo : PatternDemoBase {
+    public sealed class CommandDemo : PatternDemoBase
+    {
         /// <summary>上に移動するボタン</summary>
         [SerializeField]
         private Button moveUpButton;
@@ -46,40 +48,50 @@ namespace DesignPatterns.Behavioral.Command {
         private const float MoveDistance = 1.0f;
 
         /// <inheritdoc/>
-        protected override string PatternName {
+        protected override string PatternName
+        {
             get { return "Command"; }
         }
 
         /// <inheritdoc/>
-        protected override PatternCategory Category {
+        protected override PatternCategory Category
+        {
             get { return PatternCategory.Behavioral; }
         }
 
         /// <inheritdoc/>
-        protected override string Description {
+        protected override string Description
+        {
             get { return "要求をオブジェクトとしてカプセル化し、取り消しや再実行を可能にする"; }
         }
 
         /// <inheritdoc/>
-        protected override void OnDemoStart() {
+        protected override void OnDemoStart()
+        {
             invoker = new CommandInvoker();
 
-            if (moveUpButton != null) {
+            if (moveUpButton != null)
+            {
                 moveUpButton.onClick.AddListener(OnMoveUp);
             }
-            if (moveDownButton != null) {
+            if (moveDownButton != null)
+            {
                 moveDownButton.onClick.AddListener(OnMoveDown);
             }
-            if (moveLeftButton != null) {
+            if (moveLeftButton != null)
+            {
                 moveLeftButton.onClick.AddListener(OnMoveLeft);
             }
-            if (moveRightButton != null) {
+            if (moveRightButton != null)
+            {
                 moveRightButton.onClick.AddListener(OnMoveRight);
             }
-            if (undoButton != null) {
+            if (undoButton != null)
+            {
                 undoButton.onClick.AddListener(OnUndo);
             }
-            if (redoButton != null) {
+            if (redoButton != null)
+            {
                 redoButton.onClick.AddListener(OnRedo);
             }
 
@@ -87,7 +99,8 @@ namespace DesignPatterns.Behavioral.Command {
         }
 
         /// <summary>上方向への移動コマンドを実行する</summary>
-        private void OnMoveUp() {
+        private void OnMoveUp()
+        {
             ICommand command = new MoveCommand(TargetName, Vector2.up, MoveDistance);
             InGameLogger.Log("--- 上に移動 ---", LogColor.Yellow);
             invoker.ExecuteCommand(command);
@@ -95,7 +108,8 @@ namespace DesignPatterns.Behavioral.Command {
         }
 
         /// <summary>下方向への移動コマンドを実行する</summary>
-        private void OnMoveDown() {
+        private void OnMoveDown()
+        {
             ICommand command = new MoveCommand(TargetName, Vector2.down, MoveDistance);
             InGameLogger.Log("--- 下に移動 ---", LogColor.Yellow);
             invoker.ExecuteCommand(command);
@@ -103,7 +117,8 @@ namespace DesignPatterns.Behavioral.Command {
         }
 
         /// <summary>左方向への移動コマンドを実行する</summary>
-        private void OnMoveLeft() {
+        private void OnMoveLeft()
+        {
             ICommand command = new MoveCommand(TargetName, Vector2.left, MoveDistance);
             InGameLogger.Log("--- 左に移動 ---", LogColor.Yellow);
             invoker.ExecuteCommand(command);
@@ -111,7 +126,8 @@ namespace DesignPatterns.Behavioral.Command {
         }
 
         /// <summary>右方向への移動コマンドを実行する</summary>
-        private void OnMoveRight() {
+        private void OnMoveRight()
+        {
             ICommand command = new MoveCommand(TargetName, Vector2.right, MoveDistance);
             InGameLogger.Log("--- 右に移動 ---", LogColor.Yellow);
             invoker.ExecuteCommand(command);
@@ -119,21 +135,24 @@ namespace DesignPatterns.Behavioral.Command {
         }
 
         /// <summary>直前のコマンドを取り消す</summary>
-        private void OnUndo() {
+        private void OnUndo()
+        {
             InGameLogger.Log("--- Undo ---", LogColor.Yellow);
             invoker.Undo();
             LogHistory();
         }
 
         /// <summary>取り消したコマンドを再実行する</summary>
-        private void OnRedo() {
+        private void OnRedo()
+        {
             InGameLogger.Log("--- Redo ---", LogColor.Yellow);
             invoker.Redo();
             LogHistory();
         }
 
         /// <summary>現在のコマンド履歴をログに表示する</summary>
-        private void LogHistory() {
+        private void LogHistory()
+        {
             InGameLogger.Log(invoker.GetHistoryLog(), LogColor.White);
         }
     }

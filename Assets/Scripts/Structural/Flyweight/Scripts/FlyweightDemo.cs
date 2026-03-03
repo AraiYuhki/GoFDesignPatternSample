@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DesignPatterns.Structural.Flyweight {
+namespace DesignPatterns.Structural.Flyweight
+{
     /// <summary>
     /// Flyweightパターンのデモシーンを制御するクラス
     ///
@@ -11,7 +12,8 @@ namespace DesignPatterns.Structural.Flyweight {
     /// - 弾タイプ（共有データ）と弾インスタンス（個別データ）の分離を体験
     /// - 弾の数と弾タイプ数の比較で共有の効果を可視化
     /// </summary>
-    public sealed class FlyweightDemo : PatternDemoBase {
+    public sealed class FlyweightDemo : PatternDemoBase
+    {
         /// <summary>通常弾の大量生成ボタン</summary>
         [SerializeField]
         private Button spawnNormalButton;
@@ -38,32 +40,40 @@ namespace DesignPatterns.Structural.Flyweight {
         private const int SpawnCount = 50;
 
         /// <inheritdoc/>
-        protected override string PatternName {
+        protected override string PatternName
+        {
             get { return "Flyweight"; }
         }
 
         /// <inheritdoc/>
-        protected override PatternCategory Category {
+        protected override PatternCategory Category
+        {
             get { return PatternCategory.Structural; }
         }
 
         /// <inheritdoc/>
-        protected override string Description {
+        protected override string Description
+        {
             get { return "多数のオブジェクトで共通データを共有し、メモリ使用量を削減する"; }
         }
 
         /// <inheritdoc/>
-        protected override void OnDemoStart() {
-            if (spawnNormalButton != null) {
+        protected override void OnDemoStart()
+        {
+            if (spawnNormalButton != null)
+            {
                 spawnNormalButton.onClick.AddListener(OnSpawnNormal);
             }
-            if (spawnFireButton != null) {
+            if (spawnFireButton != null)
+            {
                 spawnFireButton.onClick.AddListener(OnSpawnFire);
             }
-            if (spawnIceButton != null) {
+            if (spawnIceButton != null)
+            {
                 spawnIceButton.onClick.AddListener(OnSpawnIce);
             }
-            if (statsButton != null) {
+            if (statsButton != null)
+            {
                 statsButton.onClick.AddListener(OnShowStats);
             }
 
@@ -71,17 +81,20 @@ namespace DesignPatterns.Structural.Flyweight {
         }
 
         /// <summary>通常弾を大量生成する</summary>
-        private void OnSpawnNormal() {
+        private void OnSpawnNormal()
+        {
             SpawnBullets("通常弾", 10, Color.white, 5f);
         }
 
         /// <summary>炎弾を大量生成する</summary>
-        private void OnSpawnFire() {
+        private void OnSpawnFire()
+        {
             SpawnBullets("炎弾", 20, Color.red, 8f);
         }
 
         /// <summary>氷弾を大量生成する</summary>
-        private void OnSpawnIce() {
+        private void OnSpawnIce()
+        {
             SpawnBullets("氷弾", 15, Color.cyan, 6f);
         }
 
@@ -92,12 +105,14 @@ namespace DesignPatterns.Structural.Flyweight {
         /// <param name="damage">ダメージ</param>
         /// <param name="color">色</param>
         /// <param name="speed">速度</param>
-        private void SpawnBullets(string name, int damage, Color color, float speed) {
+        private void SpawnBullets(string name, int damage, Color color, float speed)
+        {
             InGameLogger.Log($"--- {name} x{SpawnCount} 生成 ---", LogColor.Yellow);
 
             BulletType type = factory.GetBulletType(name, damage, color, speed);
 
-            for (int i = 0; i < SpawnCount; i++) {
+            for (int i = 0; i < SpawnCount; i++)
+            {
                 var position = new Vector2(Random.Range(-10f, 10f), Random.Range(-10f, 10f));
                 var direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
                 bullets.Add(new Bullet(type, position, direction));
@@ -109,7 +124,8 @@ namespace DesignPatterns.Structural.Flyweight {
         /// <summary>
         /// 統計情報を表示する
         /// </summary>
-        private void OnShowStats() {
+        private void OnShowStats()
+        {
             InGameLogger.Log("=== メモリ共有の統計 ===", LogColor.Yellow);
             InGameLogger.Log($"弾インスタンス合計: {bullets.Count} 個", LogColor.Green);
             InGameLogger.Log($"弾タイプ（共有データ）: {factory.GetTypeCount()} 種類", LogColor.Green);

@@ -1,4 +1,5 @@
-namespace DesignPatterns.Structural.Decorator {
+namespace DesignPatterns.Structural.Decorator
+{
     /// <summary>
     /// 武器のインターフェース（Component）
     ///
@@ -6,7 +7,8 @@ namespace DesignPatterns.Structural.Decorator {
     /// オブジェクトに動的に機能を追加する
     /// サブクラスによる拡張の代わりに、デコレーターで柔軟に機能を積み重ねる
     /// </summary>
-    public interface IWeapon {
+    public interface IWeapon
+    {
         /// <summary>武器の名前</summary>
         string Name { get; }
 

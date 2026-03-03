@@ -1,8 +1,10 @@
-namespace DesignPatterns {
+namespace DesignPatterns
+{
     /// <summary>
     /// ログ表示に使用する1件分のログデータ
     /// </summary>
-    public readonly struct LogEntry {
+    public class LogEntry
+    {
         /// <summary>ログメッセージ</summary>
         public readonly string Message;
 
@@ -14,7 +16,8 @@ namespace DesignPatterns {
         /// </summary>
         /// <param name="message">ログメッセージ</param>
         /// <param name="color">ログの色</param>
-        public LogEntry(string message, LogColor color = LogColor.White) {
+        public LogEntry(string message, LogColor color = LogColor.White)
+        {
             Message = message;
             Color = color;
         }
@@ -23,7 +26,8 @@ namespace DesignPatterns {
     /// <summary>
     /// ログ表示で使用する色の種別
     /// </summary>
-    public enum LogColor {
+    public enum LogColor
+    {
         /// <summary>通常メッセージ</summary>
         White,
         /// <summary>生成パターン</summary>

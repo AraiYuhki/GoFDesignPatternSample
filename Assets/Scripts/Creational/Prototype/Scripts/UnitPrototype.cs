@@ -1,7 +1,8 @@
 using System;
 using System.Text;
 
-namespace DesignPatterns.Creational.Prototype {
+namespace DesignPatterns.Creational.Prototype
+{
     /// <summary>
     /// 複製可能なユニットの基底クラス（Prototype）
     ///
@@ -9,7 +10,8 @@ namespace DesignPatterns.Creational.Prototype {
     /// 自分自身をコピーするためのインターフェースを定義する
     /// サブクラスが具体的なクローン処理を実装する
     /// </summary>
-    public abstract class UnitPrototype : ICloneable {
+    public abstract class UnitPrototype : ICloneable
+    {
         /// <summary>ユニット名</summary>
         public string Name { get; set; }
 
@@ -26,7 +28,8 @@ namespace DesignPatterns.Creational.Prototype {
         /// ユニットの浅いコピーを作成する（ShallowCopy）
         /// </summary>
         /// <returns>コピーされたオブジェクト</returns>
-        public object Clone() {
+        public object Clone()
+        {
             return MemberwiseClone();
         }
 
@@ -41,7 +44,8 @@ namespace DesignPatterns.Creational.Prototype {
         /// ユニット情報を文字列で返す
         /// </summary>
         /// <returns>ユニットの詳細情報</returns>
-        public override string ToString() {
+        public override string ToString()
+        {
             var sb = new StringBuilder();
             sb.Append($"{Name} Lv.{Level}");
             sb.Append($" (HP:{Hp} ATK:{Attack})");
@@ -52,13 +56,16 @@ namespace DesignPatterns.Creational.Prototype {
     /// <summary>
     /// 兵士ユニット（ConcretePrototype）
     /// </summary>
-    public sealed class SoldierUnit : UnitPrototype {
+    public sealed class SoldierUnit : UnitPrototype
+    {
         /// <summary>装備している武器名</summary>
         public string WeaponName { get; set; }
 
         /// <inheritdoc/>
-        public override UnitPrototype DeepClone() {
-            var clone = new SoldierUnit {
+        public override UnitPrototype DeepClone()
+        {
+            var clone = new SoldierUnit
+            {
                 Name = Name,
                 Hp = Hp,
                 Attack = Attack,
@@ -69,7 +76,8 @@ namespace DesignPatterns.Creational.Prototype {
         }
 
         /// <inheritdoc/>
-        public override string ToString() {
+        public override string ToString()
+        {
             return $"{base.ToString()} 武器:{WeaponName}";
         }
     }
@@ -77,13 +85,16 @@ namespace DesignPatterns.Creational.Prototype {
     /// <summary>
     /// 弓兵ユニット（ConcretePrototype）
     /// </summary>
-    public sealed class ArcherUnit : UnitPrototype {
+    public sealed class ArcherUnit : UnitPrototype
+    {
         /// <summary>射程距離</summary>
         public int Range { get; set; }
 
         /// <inheritdoc/>
-        public override UnitPrototype DeepClone() {
-            var clone = new ArcherUnit {
+        public override UnitPrototype DeepClone()
+        {
+            var clone = new ArcherUnit
+            {
                 Name = Name,
                 Hp = Hp,
                 Attack = Attack,
@@ -94,7 +105,8 @@ namespace DesignPatterns.Creational.Prototype {
         }
 
         /// <inheritdoc/>
-        public override string ToString() {
+        public override string ToString()
+        {
             return $"{base.ToString()} 射程:{Range}";
         }
     }

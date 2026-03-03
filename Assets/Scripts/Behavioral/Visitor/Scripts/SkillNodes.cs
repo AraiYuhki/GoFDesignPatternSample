@@ -1,10 +1,12 @@
-namespace DesignPatterns.Behavioral.Visitor {
+namespace DesignPatterns.Behavioral.Visitor
+{
     /// <summary>
     /// 攻撃スキルノード
     /// Visitorパターンにおける ConcreteElement に相当し、
     /// 攻撃力ボーナスを持つスキルを表す
     /// </summary>
-    public sealed class AttackSkillNode : ISkillNode {
+    public sealed class AttackSkillNode : ISkillNode
+    {
         /// <summary>スキル名</summary>
         private readonly string skillName;
 
@@ -20,29 +22,34 @@ namespace DesignPatterns.Behavioral.Visitor {
         /// <param name="skillName">スキル名</param>
         /// <param name="level">スキルレベル</param>
         /// <param name="bonusAttack">攻撃力ボーナス</param>
-        public AttackSkillNode(string skillName, int level, int bonusAttack) {
+        public AttackSkillNode(string skillName, int level, int bonusAttack)
+        {
             this.skillName = skillName;
             this.level = level;
             this.bonusAttack = bonusAttack;
         }
 
         /// <inheritdoc/>
-        public string SkillName {
+        public string SkillName
+        {
             get { return skillName; }
         }
 
         /// <inheritdoc/>
-        public int Level {
+        public int Level
+        {
             get { return level; }
         }
 
         /// <summary>攻撃力ボーナスを取得する</summary>
-        public int BonusAttack {
+        public int BonusAttack
+        {
             get { return bonusAttack; }
         }
 
         /// <inheritdoc/>
-        public void Accept(ISkillTreeVisitor visitor) {
+        public void Accept(ISkillTreeVisitor visitor)
+        {
             visitor.Visit(this);
         }
     }
@@ -52,7 +59,8 @@ namespace DesignPatterns.Behavioral.Visitor {
     /// Visitorパターンにおける ConcreteElement に相当し、
     /// 防御力ボーナスを持つスキルを表す
     /// </summary>
-    public sealed class DefenseSkillNode : ISkillNode {
+    public sealed class DefenseSkillNode : ISkillNode
+    {
         /// <summary>スキル名</summary>
         private readonly string skillName;
 
@@ -68,29 +76,34 @@ namespace DesignPatterns.Behavioral.Visitor {
         /// <param name="skillName">スキル名</param>
         /// <param name="level">スキルレベル</param>
         /// <param name="bonusDefense">防御力ボーナス</param>
-        public DefenseSkillNode(string skillName, int level, int bonusDefense) {
+        public DefenseSkillNode(string skillName, int level, int bonusDefense)
+        {
             this.skillName = skillName;
             this.level = level;
             this.bonusDefense = bonusDefense;
         }
 
         /// <inheritdoc/>
-        public string SkillName {
+        public string SkillName
+        {
             get { return skillName; }
         }
 
         /// <inheritdoc/>
-        public int Level {
+        public int Level
+        {
             get { return level; }
         }
 
         /// <summary>防御力ボーナスを取得する</summary>
-        public int BonusDefense {
+        public int BonusDefense
+        {
             get { return bonusDefense; }
         }
 
         /// <inheritdoc/>
-        public void Accept(ISkillTreeVisitor visitor) {
+        public void Accept(ISkillTreeVisitor visitor)
+        {
             visitor.Visit(this);
         }
     }
@@ -100,7 +113,8 @@ namespace DesignPatterns.Behavioral.Visitor {
     /// Visitorパターンにおける ConcreteElement に相当し、
     /// マナコストと魔力を持つスキルを表す
     /// </summary>
-    public sealed class MagicSkillNode : ISkillNode {
+    public sealed class MagicSkillNode : ISkillNode
+    {
         /// <summary>スキル名</summary>
         private readonly string skillName;
 
@@ -120,7 +134,8 @@ namespace DesignPatterns.Behavioral.Visitor {
         /// <param name="level">スキルレベル</param>
         /// <param name="manaCost">マナコスト</param>
         /// <param name="magicPower">魔力</param>
-        public MagicSkillNode(string skillName, int level, int manaCost, int magicPower) {
+        public MagicSkillNode(string skillName, int level, int manaCost, int magicPower)
+        {
             this.skillName = skillName;
             this.level = level;
             this.manaCost = manaCost;
@@ -128,27 +143,32 @@ namespace DesignPatterns.Behavioral.Visitor {
         }
 
         /// <inheritdoc/>
-        public string SkillName {
+        public string SkillName
+        {
             get { return skillName; }
         }
 
         /// <inheritdoc/>
-        public int Level {
+        public int Level
+        {
             get { return level; }
         }
 
         /// <summary>マナコストを取得する</summary>
-        public int ManaCost {
+        public int ManaCost
+        {
             get { return manaCost; }
         }
 
         /// <summary>魔力を取得する</summary>
-        public int MagicPower {
+        public int MagicPower
+        {
             get { return magicPower; }
         }
 
         /// <inheritdoc/>
-        public void Accept(ISkillTreeVisitor visitor) {
+        public void Accept(ISkillTreeVisitor visitor)
+        {
             visitor.Visit(this);
         }
     }

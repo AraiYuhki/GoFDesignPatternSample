@@ -1,10 +1,12 @@
-namespace DesignPatterns.Behavioral.Memento {
+namespace DesignPatterns.Behavioral.Memento
+{
     /// <summary>
     /// ゲーム状態のスナップショットを保持する不変クラス
     /// Mementoパターンにおける「Memento」に相当する
     /// Originatorの内部状態を外部に公開せず保存する
     /// </summary>
-    public sealed class GameStateMemento {
+    public sealed class GameStateMemento
+    {
         /// <summary>プレイヤー名</summary>
         private readonly string playerName;
 
@@ -18,22 +20,26 @@ namespace DesignPatterns.Behavioral.Memento {
         private readonly int gold;
 
         /// <summary>プレイヤー名を取得する</summary>
-        public string PlayerName {
+        public string PlayerName
+        {
             get { return playerName; }
         }
 
         /// <summary>レベルを取得する</summary>
-        public int Level {
+        public int Level
+        {
             get { return level; }
         }
 
         /// <summary>HPを取得する</summary>
-        public int Hp {
+        public int Hp
+        {
             get { return hp; }
         }
 
         /// <summary>所持金を取得する</summary>
-        public int Gold {
+        public int Gold
+        {
             get { return gold; }
         }
 
@@ -44,7 +50,8 @@ namespace DesignPatterns.Behavioral.Memento {
         /// <param name="level">レベル</param>
         /// <param name="hp">HP</param>
         /// <param name="gold">所持金</param>
-        public GameStateMemento(string playerName, int level, int hp, int gold) {
+        public GameStateMemento(string playerName, int level, int hp, int gold)
+        {
             this.playerName = playerName;
             this.level = level;
             this.hp = hp;
@@ -55,7 +62,8 @@ namespace DesignPatterns.Behavioral.Memento {
         /// 状態の文字列表現を返す
         /// </summary>
         /// <returns>フォーマットされた状態文字列</returns>
-        public override string ToString() {
+        public override string ToString()
+        {
             return $"[{playerName}] Lv.{level} HP:{hp} Gold:{gold}";
         }
     }

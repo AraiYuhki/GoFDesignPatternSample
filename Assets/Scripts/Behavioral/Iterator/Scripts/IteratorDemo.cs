@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DesignPatterns.Behavioral.Iterator {
+namespace DesignPatterns.Behavioral.Iterator
+{
     /// <summary>
     /// Iteratorパターンのデモシーンを制御するクラス
     ///
@@ -11,7 +12,8 @@ namespace DesignPatterns.Behavioral.Iterator {
     /// - Resetボタンでイテレータを先頭に戻す
     /// - Show Allボタンで全アイテムを一覧表示する
     /// </summary>
-    public sealed class IteratorDemo : PatternDemoBase {
+    public sealed class IteratorDemo : PatternDemoBase
+    {
         /// <summary>次のアイテムを表示するボタン</summary>
         [SerializeField]
         private Button nextItemButton;
@@ -31,32 +33,39 @@ namespace DesignPatterns.Behavioral.Iterator {
         private IIterator<Item> iterator;
 
         /// <inheritdoc/>
-        protected override string PatternName {
+        protected override string PatternName
+        {
             get { return "Iterator"; }
         }
 
         /// <inheritdoc/>
-        protected override PatternCategory Category {
+        protected override PatternCategory Category
+        {
             get { return PatternCategory.Behavioral; }
         }
 
         /// <inheritdoc/>
-        protected override string Description {
+        protected override string Description
+        {
             get { return "集合の内部表現を公開せず、要素を順次アクセスする方法を提供する"; }
         }
 
         /// <inheritdoc/>
-        protected override void OnDemoStart() {
+        protected override void OnDemoStart()
+        {
             BuildInventory();
             iterator = inventory.CreateIterator();
 
-            if (nextItemButton != null) {
+            if (nextItemButton != null)
+            {
                 nextItemButton.onClick.AddListener(OnNextItem);
             }
-            if (resetButton != null) {
+            if (resetButton != null)
+            {
                 resetButton.onClick.AddListener(OnReset);
             }
-            if (showAllButton != null) {
+            if (showAllButton != null)
+            {
                 showAllButton.onClick.AddListener(OnShowAll);
             }
 
@@ -67,7 +76,8 @@ namespace DesignPatterns.Behavioral.Iterator {
         /// <summary>
         /// インベントリにサンプルアイテムを追加する
         /// </summary>
-        private void BuildInventory() {
+        private void BuildInventory()
+        {
             inventory = new Inventory();
             inventory.Add(new Item("鉄の剣", "Common", 100));
             inventory.Add(new Item("魔法のローブ", "Rare", 500));
@@ -78,8 +88,10 @@ namespace DesignPatterns.Behavioral.Iterator {
         }
 
         /// <summary>次のアイテムを表示する</summary>
-        private void OnNextItem() {
-            if (!iterator.HasNext) {
+        private void OnNextItem()
+        {
+            if (!iterator.HasNext)
+            {
                 InGameLogger.Log("  全てのアイテムを走査しました（末尾に到達）", LogColor.Red);
                 InGameLogger.Log("  Resetボタンで先頭に戻してください", LogColor.Yellow);
                 return;
@@ -90,18 +102,21 @@ namespace DesignPatterns.Behavioral.Iterator {
         }
 
         /// <summary>イテレータを先頭にリセットする</summary>
-        private void OnReset() {
+        private void OnReset()
+        {
             iterator.Reset();
             InGameLogger.Log("--- イテレータをリセット ---", LogColor.Yellow);
             InGameLogger.Log("  先頭に戻りました。Nextで再度走査できます", LogColor.White);
         }
 
         /// <summary>全アイテムを一覧表示する</summary>
-        private void OnShowAll() {
+        private void OnShowAll()
+        {
             InGameLogger.Log("--- 全アイテム一覧 ---", LogColor.Yellow);
             IIterator<Item> allIterator = inventory.CreateIterator();
             int index = 0;
-            while (allIterator.HasNext) {
+            while (allIterator.HasNext)
+            {
                 Item item = allIterator.Next();
                 InGameLogger.Log($"  [{index}] {item}", CategoryColor);
                 index++;

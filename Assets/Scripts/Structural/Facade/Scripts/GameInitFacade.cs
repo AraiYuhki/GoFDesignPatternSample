@@ -1,4 +1,5 @@
-namespace DesignPatterns.Structural.Facade {
+namespace DesignPatterns.Structural.Facade
+{
     /// <summary>
     /// ゲーム初期化のファサード（Facade）
     ///
@@ -6,7 +7,8 @@ namespace DesignPatterns.Structural.Facade {
     /// サブシステム群への統一的なインターフェースを提供する
     /// クライアントは複雑な内部システムを意識せず、シンプルなAPIで操作できる
     /// </summary>
-    public sealed class GameInitFacade {
+    public sealed class GameInitFacade
+    {
         /// <summary>オーディオサブシステム</summary>
         private readonly AudioSubSystem audio;
 
@@ -22,7 +24,8 @@ namespace DesignPatterns.Structural.Facade {
         /// <summary>
         /// ファサードを生成する
         /// </summary>
-        public GameInitFacade() {
+        public GameInitFacade()
+        {
             audio = new AudioSubSystem();
             graphics = new GraphicsSubSystem();
             input = new InputSubSystem();
@@ -33,7 +36,8 @@ namespace DesignPatterns.Structural.Facade {
         /// ゲームの全初期化を一括で実行する
         /// 複雑なサブシステムの初期化順序をファサードが管理する
         /// </summary>
-        public void InitializeGame() {
+        public void InitializeGame()
+        {
             InGameLogger.Log("▶ グラフィックス初期化", LogColor.Green);
             graphics.Initialize();
             graphics.SetResolution(1920, 1080);
@@ -55,7 +59,8 @@ namespace DesignPatterns.Structural.Facade {
         /// <summary>
         /// クイックスタート（最低限の初期化のみ）
         /// </summary>
-        public void QuickStart() {
+        public void QuickStart()
+        {
             InGameLogger.Log("▶ グラフィックス初期化", LogColor.Green);
             graphics.Initialize();
 

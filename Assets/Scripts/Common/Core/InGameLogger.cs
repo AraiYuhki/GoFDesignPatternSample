@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Text;
-using TMPro;
 using UnityEngine;
 using Xeon.Common.FlyweightScrollView.Model;
 
@@ -10,6 +7,7 @@ namespace DesignPatterns
     /// 画面内にログを表示するコンポーネント
     /// Debug.Logの代わりに使用し、パターンの動作を画面上で可視化する
     /// </summary>
+    [DefaultExecutionOrder(-1)]
     public sealed class InGameLogger : MonoBehaviour
     {
 
@@ -17,7 +15,9 @@ namespace DesignPatterns
         private static InGameLogger instance;
 
         /// <summary>ログエントリのリスト</summary>
-        private CircularBuffer<LogEntry> entries;
+        private CircularBuffer<LogEntry> entries = new CircularBuffer<LogEntry>(3000, false);
+
+        public CircularBuffer<LogEntry> Entries => entries;
 
         public static InGameLogger Instance => instance;
 
@@ -64,7 +64,7 @@ namespace DesignPatterns
         /// </summary>
         public static void Clear()
         {
-            if (instance == null)
+            if (instance == null || instance.entries == null)
             {
                 return;
             }
@@ -77,7 +77,7 @@ namespace DesignPatterns
         /// <param name="entry">追加するログエントリ</param>
         private void AddEntry(LogEntry entry)
         {
-            entries.PushFront(entry);
+            entries.PushBack(entry);
         }
     }
 }

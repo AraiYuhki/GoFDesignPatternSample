@@ -1,10 +1,12 @@
-namespace DesignPatterns.Behavioral.State {
+namespace DesignPatterns.Behavioral.State
+{
     /// <summary>
     /// キャラクターの状態を定義するインターフェース
     /// Stateパターンにおける「State」に相当する
     /// 各状態で異なる振る舞いを提供し、状態遷移のロジックを各状態に委譲する
     /// </summary>
-    public interface ICharacterState {
+    public interface ICharacterState
+    {
         /// <summary>状態の名称</summary>
         string StateName { get; }
 

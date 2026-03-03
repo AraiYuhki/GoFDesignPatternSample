@@ -2,7 +2,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Xeon.Common.FlyweightScrollView;
-using Xeon.Common.FlyweightScrollView.Model;
 
 namespace DesignPatterns
 {
@@ -25,13 +24,9 @@ namespace DesignPatterns
 
         private FlyweightScrollViewController<LogEntry, LogEntryItem> scrollViewController;
 
-        /// <summary>ログエントリのリスト</summary>
-        private CircularBuffer<LogEntry> entries = new CircularBuffer<LogEntry>(3000, true);
-
         private void Start()
         {
-            InGameLogger.Instance.SetEntries(entries);
-            scrollViewController = new FlyweightScrollViewController<LogEntry, LogEntryItem>(itemPrefab, entries);
+            scrollViewController = new FlyweightScrollViewController<LogEntry, LogEntryItem>(itemPrefab, InGameLogger.Instance.Entries);
             scrollView.Setup(scrollViewController);
         }
     }

@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 
-namespace DesignPatterns.Behavioral.Iterator {
+namespace DesignPatterns.Behavioral.Iterator
+{
     /// <summary>
     /// インベントリ内のアイテムを表すクラス
     /// </summary>
-    public sealed class Item {
+    public sealed class Item
+    {
         /// <summary>アイテム名</summary>
         private readonly string name;
 
@@ -15,17 +17,20 @@ namespace DesignPatterns.Behavioral.Iterator {
         private readonly int value;
 
         /// <summary>アイテム名を取得する</summary>
-        public string Name {
+        public string Name
+        {
             get { return name; }
         }
 
         /// <summary>アイテムのレアリティを取得する</summary>
-        public string Rarity {
+        public string Rarity
+        {
             get { return rarity; }
         }
 
         /// <summary>アイテムの価値を取得する</summary>
-        public int Value {
+        public int Value
+        {
             get { return value; }
         }
 
@@ -35,7 +40,8 @@ namespace DesignPatterns.Behavioral.Iterator {
         /// <param name="name">アイテム名</param>
         /// <param name="rarity">レアリティ</param>
         /// <param name="value">価値</param>
-        public Item(string name, string rarity, int value) {
+        public Item(string name, string rarity, int value)
+        {
             this.name = name;
             this.rarity = rarity;
             this.value = value;
@@ -45,7 +51,8 @@ namespace DesignPatterns.Behavioral.Iterator {
         /// アイテムの文字列表現を返す
         /// </summary>
         /// <returns>フォーマットされたアイテム情報</returns>
-        public override string ToString() {
+        public override string ToString()
+        {
             return $"{name} [{rarity}] (価値: {value}G)";
         }
     }
@@ -55,12 +62,14 @@ namespace DesignPatterns.Behavioral.Iterator {
     /// Iteratorパターンにおける「ConcreteAggregate」に相当する
     /// 内部のリスト構造を公開せずにイテレータを提供する
     /// </summary>
-    public sealed class Inventory : IAggregate<Item> {
+    public sealed class Inventory : IAggregate<Item>
+    {
         /// <summary>アイテムの内部リスト</summary>
         private readonly List<Item> items = new List<Item>();
 
         /// <summary>インベントリ内のアイテム数を取得する</summary>
-        public int Count {
+        public int Count
+        {
             get { return items.Count; }
         }
 
@@ -68,7 +77,8 @@ namespace DesignPatterns.Behavioral.Iterator {
         /// アイテムをインベントリに追加する
         /// </summary>
         /// <param name="item">追加するアイテム</param>
-        public void Add(Item item) {
+        public void Add(Item item)
+        {
             items.Add(item);
         }
 
@@ -77,7 +87,8 @@ namespace DesignPatterns.Behavioral.Iterator {
         /// </summary>
         /// <param name="index">アイテムのインデックス</param>
         /// <returns>指定されたアイテム</returns>
-        public Item GetItem(int index) {
+        public Item GetItem(int index)
+        {
             return items[index];
         }
 
@@ -85,7 +96,8 @@ namespace DesignPatterns.Behavioral.Iterator {
         /// インベントリのイテレータを生成する
         /// </summary>
         /// <returns>新しいInventoryIteratorインスタンス</returns>
-        public IIterator<Item> CreateIterator() {
+        public IIterator<Item> CreateIterator()
+        {
             return new InventoryIterator(this);
         }
     }
@@ -95,7 +107,8 @@ namespace DesignPatterns.Behavioral.Iterator {
     /// Iteratorパターンにおける「ConcreteIterator」に相当する
     /// インベントリの内部構造に依存せず順次アクセスを提供する
     /// </summary>
-    public sealed class InventoryIterator : IIterator<Item> {
+    public sealed class InventoryIterator : IIterator<Item>
+    {
         /// <summary>走査対象のインベントリ</summary>
         private readonly Inventory inventory;
 
@@ -105,16 +118,20 @@ namespace DesignPatterns.Behavioral.Iterator {
         /// <summary>
         /// 次の要素が存在するかどうかを取得する
         /// </summary>
-        public bool HasNext {
+        public bool HasNext
+        {
             get { return currentIndex < inventory.Count; }
         }
 
         /// <summary>
         /// 現在の要素を取得する
         /// </summary>
-        public Item Current {
-            get {
-                if (currentIndex <= 0 || currentIndex > inventory.Count) {
+        public Item Current
+        {
+            get
+            {
+                if (currentIndex <= 0 || currentIndex > inventory.Count)
+                {
                     return null;
                 }
                 return inventory.GetItem(currentIndex - 1);
@@ -125,7 +142,8 @@ namespace DesignPatterns.Behavioral.Iterator {
         /// InventoryIteratorを生成する
         /// </summary>
         /// <param name="inventory">走査対象のインベントリ</param>
-        public InventoryIterator(Inventory inventory) {
+        public InventoryIterator(Inventory inventory)
+        {
             this.inventory = inventory;
             currentIndex = 0;
         }
@@ -134,7 +152,8 @@ namespace DesignPatterns.Behavioral.Iterator {
         /// 次の要素に移動し、その要素を返す
         /// </summary>
         /// <returns>次のアイテム</returns>
-        public Item Next() {
+        public Item Next()
+        {
             Item item = inventory.GetItem(currentIndex);
             currentIndex++;
             return item;
@@ -143,7 +162,8 @@ namespace DesignPatterns.Behavioral.Iterator {
         /// <summary>
         /// イテレータを先頭にリセットする
         /// </summary>
-        public void Reset() {
+        public void Reset()
+        {
             currentIndex = 0;
         }
     }

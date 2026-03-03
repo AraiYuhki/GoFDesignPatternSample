@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DesignPatterns.Behavioral.Observer {
+namespace DesignPatterns.Behavioral.Observer
+{
     /// <summary>
     /// Observerパターンのデモシーンを制御するクラス
     ///
@@ -10,7 +11,8 @@ namespace DesignPatterns.Behavioral.Observer {
     /// - ダメージ/回復でHP変更 → 全オブザーバーが自動更新
     /// - オブザーバーの動的な追加・削除
     /// </summary>
-    public sealed class ObserverDemo : PatternDemoBase {
+    public sealed class ObserverDemo : PatternDemoBase
+    {
         /// <summary>ダメージを与えるボタン</summary>
         [SerializeField]
         private Button damageButton;
@@ -39,22 +41,26 @@ namespace DesignPatterns.Behavioral.Observer {
         private const int MaxHpValue = 100;
 
         /// <inheritdoc/>
-        protected override string PatternName {
+        protected override string PatternName
+        {
             get { return "Observer"; }
         }
 
         /// <inheritdoc/>
-        protected override PatternCategory Category {
+        protected override PatternCategory Category
+        {
             get { return PatternCategory.Behavioral; }
         }
 
         /// <inheritdoc/>
-        protected override string Description {
+        protected override string Description
+        {
             get { return "1対多の依存関係を定義し、状態変化を全ての依存オブジェクトに自動通知する"; }
         }
 
         /// <inheritdoc/>
-        protected override void OnDemoStart() {
+        protected override void OnDemoStart()
+        {
             healthSystem = new HealthSystem(MaxHpValue);
 
             healthSystem.Subscribe(new HpBarObserver());
@@ -63,13 +69,16 @@ namespace DesignPatterns.Behavioral.Observer {
 
             InGameLogger.Log("3つのオブザーバーを登録: HPバー, 数値, 警告", LogColor.Yellow);
 
-            if (damageButton != null) {
+            if (damageButton != null)
+            {
                 damageButton.onClick.AddListener(OnDamage);
             }
-            if (healButton != null) {
+            if (healButton != null)
+            {
                 healButton.onClick.AddListener(OnHeal);
             }
-            if (bigDamageButton != null) {
+            if (bigDamageButton != null)
+            {
                 bigDamageButton.onClick.AddListener(OnBigDamage);
             }
 
@@ -77,19 +86,22 @@ namespace DesignPatterns.Behavioral.Observer {
         }
 
         /// <summary>ダメージを与える</summary>
-        private void OnDamage() {
+        private void OnDamage()
+        {
             InGameLogger.Log($"--- {DamageAmount} ダメージ! ---", LogColor.Yellow);
             healthSystem.TakeDamage(DamageAmount);
         }
 
         /// <summary>回復する</summary>
-        private void OnHeal() {
+        private void OnHeal()
+        {
             InGameLogger.Log($"--- {HealAmount} 回復! ---", LogColor.Yellow);
             healthSystem.Heal(HealAmount);
         }
 
         /// <summary>大ダメージを与える</summary>
-        private void OnBigDamage() {
+        private void OnBigDamage()
+        {
             InGameLogger.Log($"--- {BigDamageAmount} 大ダメージ!! ---", LogColor.Yellow);
             healthSystem.TakeDamage(BigDamageAmount);
         }

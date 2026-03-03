@@ -1,6 +1,7 @@
 using UnityEngine;
 
-namespace DesignPatterns.Creational.AbstractFactory {
+namespace DesignPatterns.Creational.AbstractFactory
+{
     /// <summary>
     /// UIテーマの抽象ファクトリ（AbstractFactory）
     ///
@@ -8,7 +9,8 @@ namespace DesignPatterns.Creational.AbstractFactory {
     /// 関連するオブジェクト群を生成するためのインターフェースを定義する
     /// 具象ファクトリがテーマに応じた一貫性のあるUI部品群を生成する
     /// </summary>
-    public interface IThemeFactory {
+    public interface IThemeFactory
+    {
         /// <summary>テーマ名</summary>
         string ThemeName { get; }
 

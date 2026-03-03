@@ -1,4 +1,5 @@
-namespace DesignPatterns.Structural.Adapter {
+namespace DesignPatterns.Structural.Adapter
+{
     /// <summary>
     /// 新しいオーディオシステムのインターフェース（Target）
     ///
@@ -6,7 +7,8 @@ namespace DesignPatterns.Structural.Adapter {
     /// クライアントが期待するインターフェース
     /// アダプターがこのインターフェースを実装し、旧システムとの橋渡しをする
     /// </summary>
-    public interface IModernAudio {
+    public interface IModernAudio
+    {
         /// <summary>
         /// 音声を再生する
         /// </summary>

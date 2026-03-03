@@ -1,10 +1,12 @@
-namespace DesignPatterns.Behavioral.Command {
+namespace DesignPatterns.Behavioral.Command
+{
     /// <summary>
     /// コマンドを定義するインターフェース
     /// Commandパターンにおける「Command」に相当する
     /// 要求をオブジェクトとしてカプセル化し、実行と取り消しの操作を提供する
     /// </summary>
-    public interface ICommand {
+    public interface ICommand
+    {
         /// <summary>コマンドの説明テキスト</summary>
         string Description { get; }
 

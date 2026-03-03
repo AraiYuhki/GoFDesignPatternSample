@@ -1,10 +1,12 @@
-namespace DesignPatterns.Behavioral.Strategy {
+namespace DesignPatterns.Behavioral.Strategy
+{
     /// <summary>
     /// 敵AIの戦略を定義するインターフェース
     /// Strategyパターンにおける「Strategy」に相当する
     /// アルゴリズムの共通インターフェースを提供し、具象戦略を差し替え可能にする
     /// </summary>
-    public interface IEnemyStrategy {
+    public interface IEnemyStrategy
+    {
         /// <summary>戦略の名称</summary>
         string StrategyName { get; }
 

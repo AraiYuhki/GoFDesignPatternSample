@@ -1,6 +1,7 @@
 using UnityEngine;
 
-namespace DesignPatterns.Structural.Bridge {
+namespace DesignPatterns.Structural.Bridge
+{
     /// <summary>
     /// 色の描画実装インターフェース（Implementor）
     ///
@@ -8,7 +9,8 @@ namespace DesignPatterns.Structural.Bridge {
     /// 実装側の階層のインターフェースを定義する
     /// 具体的な色の実装を提供する
     /// </summary>
-    public interface IColorImplementor {
+    public interface IColorImplementor
+    {
         /// <summary>色の名前</summary>
         string ColorName { get; }
 
@@ -20,7 +22,8 @@ namespace DesignPatterns.Structural.Bridge {
     }
 
     /// <summary>赤色の実装（ConcreteImplementor）</summary>
-    public sealed class RedColor : IColorImplementor {
+    public sealed class RedColor : IColorImplementor
+    {
         /// <inheritdoc/>
         public string ColorName { get { return "赤"; } }
 
@@ -29,7 +32,8 @@ namespace DesignPatterns.Structural.Bridge {
     }
 
     /// <summary>青色の実装（ConcreteImplementor）</summary>
-    public sealed class BlueColor : IColorImplementor {
+    public sealed class BlueColor : IColorImplementor
+    {
         /// <inheritdoc/>
         public string ColorName { get { return "青"; } }
 
@@ -38,7 +42,8 @@ namespace DesignPatterns.Structural.Bridge {
     }
 
     /// <summary>緑色の実装（ConcreteImplementor）</summary>
-    public sealed class GreenColor : IColorImplementor {
+    public sealed class GreenColor : IColorImplementor
+    {
         /// <inheritdoc/>
         public string ColorName { get { return "緑"; } }
 

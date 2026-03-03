@@ -1,4 +1,5 @@
-namespace DesignPatterns.Structural.Proxy {
+namespace DesignPatterns.Structural.Proxy
+{
     /// <summary>
     /// 画像のインターフェース（Subject）
     ///
@@ -6,7 +7,8 @@ namespace DesignPatterns.Structural.Proxy {
     /// あるオブジェクトへのアクセスを制御するための代理オブジェクトを提供する
     /// ここでは遅延ロード（Virtual Proxy）を実装する
     /// </summary>
-    public interface IImage {
+    public interface IImage
+    {
         /// <summary>ファイル名</summary>
         string FileName { get; }
 

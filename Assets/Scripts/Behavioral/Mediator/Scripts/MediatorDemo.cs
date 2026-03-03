@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DesignPatterns.Behavioral.Mediator {
+namespace DesignPatterns.Behavioral.Mediator
+{
     /// <summary>
     /// Mediatorパターンのデモシーンを制御するクラス
     ///
@@ -10,7 +11,8 @@ namespace DesignPatterns.Behavioral.Mediator {
     /// - 各ユーザーは他のユーザーを直接参照せず、仲介者を通じて通信する
     /// - 送信者以外の全ユーザーにメッセージが配信される様子を確認できる
     /// </summary>
-    public sealed class MediatorDemo : PatternDemoBase {
+    public sealed class MediatorDemo : PatternDemoBase
+    {
         /// <summary>Aliceがメッセージを送信するボタン</summary>
         [SerializeField]
         private Button aliceSendButton;
@@ -66,22 +68,26 @@ namespace DesignPatterns.Behavioral.Mediator {
         };
 
         /// <inheritdoc/>
-        protected override string PatternName {
+        protected override string PatternName
+        {
             get { return "Mediator"; }
         }
 
         /// <inheritdoc/>
-        protected override PatternCategory Category {
+        protected override PatternCategory Category
+        {
             get { return PatternCategory.Behavioral; }
         }
 
         /// <inheritdoc/>
-        protected override string Description {
+        protected override string Description
+        {
             get { return "オブジェクト間の相互作用を仲介者に集約し、オブジェクト同士の直接参照を避ける"; }
         }
 
         /// <inheritdoc/>
-        protected override void OnDemoStart() {
+        protected override void OnDemoStart()
+        {
             chatRoom = new ChatRoom();
 
             alice = new ChatUser("Alice", chatRoom);
@@ -97,13 +103,16 @@ namespace DesignPatterns.Behavioral.Mediator {
             bobMessageCount = 0;
             charlieMessageCount = 0;
 
-            if (aliceSendButton != null) {
+            if (aliceSendButton != null)
+            {
                 aliceSendButton.onClick.AddListener(OnAliceSend);
             }
-            if (bobSendButton != null) {
+            if (bobSendButton != null)
+            {
                 bobSendButton.onClick.AddListener(OnBobSend);
             }
-            if (charlieSendButton != null) {
+            if (charlieSendButton != null)
+            {
                 charlieSendButton.onClick.AddListener(OnCharlieSend);
             }
 
@@ -111,7 +120,8 @@ namespace DesignPatterns.Behavioral.Mediator {
         }
 
         /// <summary>Aliceがメッセージを送信する</summary>
-        private void OnAliceSend() {
+        private void OnAliceSend()
+        {
             string message = AliceMessages[aliceMessageCount % AliceMessages.Length];
             aliceMessageCount++;
             InGameLogger.Log("--- Alice が送信 ---", LogColor.Yellow);
@@ -119,7 +129,8 @@ namespace DesignPatterns.Behavioral.Mediator {
         }
 
         /// <summary>Bobがメッセージを送信する</summary>
-        private void OnBobSend() {
+        private void OnBobSend()
+        {
             string message = BobMessages[bobMessageCount % BobMessages.Length];
             bobMessageCount++;
             InGameLogger.Log("--- Bob が送信 ---", LogColor.Yellow);
@@ -127,7 +138,8 @@ namespace DesignPatterns.Behavioral.Mediator {
         }
 
         /// <summary>Charlieがメッセージを送信する</summary>
-        private void OnCharlieSend() {
+        private void OnCharlieSend()
+        {
             string message = CharlieMessages[charlieMessageCount % CharlieMessages.Length];
             charlieMessageCount++;
             InGameLogger.Log("--- Charlie が送信 ---", LogColor.Yellow);

@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 
-namespace DesignPatterns.Behavioral.Memento {
+namespace DesignPatterns.Behavioral.Memento
+{
     /// <summary>
     /// Mementoの保存・管理を行うCaretakerクラス
     /// Mementoパターンにおける「Caretaker」に相当する
     /// Mementoの内容にはアクセスせず、保存と取得のみを行う
     /// </summary>
-    public sealed class GameStateCaretaker {
+    public sealed class GameStateCaretaker
+    {
         /// <summary>保存されたMementoのリスト</summary>
         private readonly List<GameStateMemento> saveSlots = new List<GameStateMemento>();
 
@@ -14,7 +16,8 @@ namespace DesignPatterns.Behavioral.Memento {
         /// 状態をセーブスロットに保存する
         /// </summary>
         /// <param name="memento">保存するMemento</param>
-        public void SaveState(GameStateMemento memento) {
+        public void SaveState(GameStateMemento memento)
+        {
             saveSlots.Add(memento);
         }
 
@@ -23,8 +26,10 @@ namespace DesignPatterns.Behavioral.Memento {
         /// </summary>
         /// <param name="index">セーブスロットのインデックス</param>
         /// <returns>指定されたMemento、インデックスが無効な場合はnull</returns>
-        public GameStateMemento LoadState(int index) {
-            if (index < 0 || index >= saveSlots.Count) {
+        public GameStateMemento LoadState(int index)
+        {
+            if (index < 0 || index >= saveSlots.Count)
+            {
                 return null;
             }
             return saveSlots[index];
@@ -34,7 +39,8 @@ namespace DesignPatterns.Behavioral.Memento {
         /// 保存されているセーブデータの数を取得する
         /// </summary>
         /// <returns>セーブデータの数</returns>
-        public int GetSaveCount() {
+        public int GetSaveCount()
+        {
             return saveSlots.Count;
         }
     }

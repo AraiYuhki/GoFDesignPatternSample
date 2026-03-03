@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DesignPatterns.Behavioral.Strategy {
+namespace DesignPatterns.Behavioral.Strategy
+{
     /// <summary>
     /// Strategyパターンのデモシーンを制御するクラス
     ///
@@ -10,7 +11,8 @@ namespace DesignPatterns.Behavioral.Strategy {
     /// - 戦略を選択してから実行ボタンで行動を確認
     /// - アルゴリズムのカプセル化と動的な切り替えを体験する
     /// </summary>
-    public sealed class StrategyDemo : PatternDemoBase {
+    public sealed class StrategyDemo : PatternDemoBase
+    {
         /// <summary>攻撃型戦略に切り替えるボタン</summary>
         [SerializeField]
         private Button aggressiveButton;
@@ -31,35 +33,43 @@ namespace DesignPatterns.Behavioral.Strategy {
         private IEnemyStrategy currentStrategy;
 
         /// <inheritdoc/>
-        protected override string PatternName {
+        protected override string PatternName
+        {
             get { return "Strategy"; }
         }
 
         /// <inheritdoc/>
-        protected override PatternCategory Category {
+        protected override PatternCategory Category
+        {
             get { return PatternCategory.Behavioral; }
         }
 
         /// <inheritdoc/>
-        protected override string Description {
+        protected override string Description
+        {
             get { return "アルゴリズムをカプセル化し、実行時に切り替え可能にする"; }
         }
 
         /// <inheritdoc/>
-        protected override void OnDemoStart() {
+        protected override void OnDemoStart()
+        {
             currentStrategy = new AggressiveStrategy();
             InGameLogger.Log($"初期戦略: {currentStrategy.StrategyName}", LogColor.Yellow);
 
-            if (aggressiveButton != null) {
+            if (aggressiveButton != null)
+            {
                 aggressiveButton.onClick.AddListener(OnSelectAggressive);
             }
-            if (defensiveButton != null) {
+            if (defensiveButton != null)
+            {
                 defensiveButton.onClick.AddListener(OnSelectDefensive);
             }
-            if (fleeButton != null) {
+            if (fleeButton != null)
+            {
                 fleeButton.onClick.AddListener(OnSelectFlee);
             }
-            if (executeButton != null) {
+            if (executeButton != null)
+            {
                 executeButton.onClick.AddListener(OnExecuteStrategy);
             }
 
@@ -67,26 +77,31 @@ namespace DesignPatterns.Behavioral.Strategy {
         }
 
         /// <summary>攻撃型戦略に切り替える</summary>
-        private void OnSelectAggressive() {
+        private void OnSelectAggressive()
+        {
             currentStrategy = new AggressiveStrategy();
             InGameLogger.Log($"戦略を変更: {currentStrategy.StrategyName}", CategoryColor);
         }
 
         /// <summary>防御型戦略に切り替える</summary>
-        private void OnSelectDefensive() {
+        private void OnSelectDefensive()
+        {
             currentStrategy = new DefensiveStrategy();
             InGameLogger.Log($"戦略を変更: {currentStrategy.StrategyName}", CategoryColor);
         }
 
         /// <summary>逃走型戦略に切り替える</summary>
-        private void OnSelectFlee() {
+        private void OnSelectFlee()
+        {
             currentStrategy = new FleeStrategy();
             InGameLogger.Log($"戦略を変更: {currentStrategy.StrategyName}", CategoryColor);
         }
 
         /// <summary>現在の戦略を実行する</summary>
-        private void OnExecuteStrategy() {
-            if (currentStrategy == null) {
+        private void OnExecuteStrategy()
+        {
+            if (currentStrategy == null)
+            {
                 InGameLogger.Log("戦略が設定されていません", LogColor.Red);
                 return;
             }

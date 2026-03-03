@@ -1,4 +1,5 @@
-namespace DesignPatterns.Creational.FactoryMethod {
+namespace DesignPatterns.Creational.FactoryMethod
+{
     /// <summary>
     /// 敵キャラクターを生成する抽象ファクトリ（Creator）
     ///
@@ -6,7 +7,8 @@ namespace DesignPatterns.Creational.FactoryMethod {
     /// オブジェクトの生成をサブクラスに委ねるためのメソッドを定義する
     /// サブクラスがどのクラスをインスタンス化するかを決定する
     /// </summary>
-    public abstract class EnemyFactory {
+    public abstract class EnemyFactory
+    {
         /// <summary>ファクトリの名前</summary>
         public abstract string FactoryName { get; }
 
@@ -21,12 +23,14 @@ namespace DesignPatterns.Creational.FactoryMethod {
     /// <summary>
     /// スライムを生成するファクトリ（ConcreteCreator）
     /// </summary>
-    public sealed class SlimeFactory : EnemyFactory {
+    public sealed class SlimeFactory : EnemyFactory
+    {
         /// <inheritdoc/>
         public override string FactoryName { get { return "スライム工場"; } }
 
         /// <inheritdoc/>
-        public override IEnemy CreateEnemy() {
+        public override IEnemy CreateEnemy()
+        {
             return new Slime();
         }
     }
@@ -34,12 +38,14 @@ namespace DesignPatterns.Creational.FactoryMethod {
     /// <summary>
     /// ゴブリンを生成するファクトリ（ConcreteCreator）
     /// </summary>
-    public sealed class GoblinFactory : EnemyFactory {
+    public sealed class GoblinFactory : EnemyFactory
+    {
         /// <inheritdoc/>
         public override string FactoryName { get { return "ゴブリン工場"; } }
 
         /// <inheritdoc/>
-        public override IEnemy CreateEnemy() {
+        public override IEnemy CreateEnemy()
+        {
             return new Goblin();
         }
     }
@@ -47,12 +53,14 @@ namespace DesignPatterns.Creational.FactoryMethod {
     /// <summary>
     /// ドラゴンを生成するファクトリ（ConcreteCreator）
     /// </summary>
-    public sealed class DragonFactory : EnemyFactory {
+    public sealed class DragonFactory : EnemyFactory
+    {
         /// <inheritdoc/>
         public override string FactoryName { get { return "ドラゴン工場"; } }
 
         /// <inheritdoc/>
-        public override IEnemy CreateEnemy() {
+        public override IEnemy CreateEnemy()
+        {
             return new Dragon();
         }
     }

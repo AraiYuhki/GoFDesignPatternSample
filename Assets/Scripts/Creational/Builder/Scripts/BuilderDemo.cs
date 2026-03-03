@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DesignPatterns.Creational.Builder {
+namespace DesignPatterns.Creational.Builder
+{
     /// <summary>
     /// Builderパターンのデモシーンを制御するクラス
     ///
@@ -10,7 +11,8 @@ namespace DesignPatterns.Creational.Builder {
     /// - 全装備 / 最低装備の2つの構築手順を切り替え
     /// - 段階的な構築プロセスをログで可視化
     /// </summary>
-    public sealed class BuilderDemo : PatternDemoBase {
+    public sealed class BuilderDemo : PatternDemoBase
+    {
         /// <summary>戦士の全装備構築ボタン</summary>
         [SerializeField]
         private Button buildWarriorFullButton;
@@ -31,32 +33,40 @@ namespace DesignPatterns.Creational.Builder {
         private readonly CharacterDirector director = new CharacterDirector();
 
         /// <inheritdoc/>
-        protected override string PatternName {
+        protected override string PatternName
+        {
             get { return "Builder"; }
         }
 
         /// <inheritdoc/>
-        protected override PatternCategory Category {
+        protected override PatternCategory Category
+        {
             get { return PatternCategory.Creational; }
         }
 
         /// <inheritdoc/>
-        protected override string Description {
+        protected override string Description
+        {
             get { return "複雑なオブジェクトの構築過程を抽象化し、同じ構築過程で異なる表現を生成する"; }
         }
 
         /// <inheritdoc/>
-        protected override void OnDemoStart() {
-            if (buildWarriorFullButton != null) {
+        protected override void OnDemoStart()
+        {
+            if (buildWarriorFullButton != null)
+            {
                 buildWarriorFullButton.onClick.AddListener(() => BuildFull(new WarriorBuilder()));
             }
-            if (buildMageFullButton != null) {
+            if (buildMageFullButton != null)
+            {
                 buildMageFullButton.onClick.AddListener(() => BuildFull(new MageBuilder()));
             }
-            if (buildThiefFullButton != null) {
+            if (buildThiefFullButton != null)
+            {
                 buildThiefFullButton.onClick.AddListener(() => BuildFull(new ThiefBuilder()));
             }
-            if (buildWarriorMinButton != null) {
+            if (buildWarriorMinButton != null)
+            {
                 buildWarriorMinButton.onClick.AddListener(() => BuildMinimal(new WarriorBuilder()));
             }
 
@@ -67,7 +77,8 @@ namespace DesignPatterns.Creational.Builder {
         /// 全装備でキャラクターを構築する
         /// </summary>
         /// <param name="builder">使用するビルダー</param>
-        private void BuildFull(ICharacterBuilder builder) {
+        private void BuildFull(ICharacterBuilder builder)
+        {
             InGameLogger.Log($"--- {builder.BuilderName}: 全装備で構築 ---", LogColor.Yellow);
             CharacterData character = director.ConstructFullEquipped(builder);
             InGameLogger.Log(character.ToString(), LogColor.Blue);
@@ -77,7 +88,8 @@ namespace DesignPatterns.Creational.Builder {
         /// 最低装備でキャラクターを構築する
         /// </summary>
         /// <param name="builder">使用するビルダー</param>
-        private void BuildMinimal(ICharacterBuilder builder) {
+        private void BuildMinimal(ICharacterBuilder builder)
+        {
             InGameLogger.Log($"--- {builder.BuilderName}: 最低装備で構築 ---", LogColor.Yellow);
             CharacterData character = director.ConstructMinimal(builder);
             InGameLogger.Log(character.ToString(), LogColor.Blue);

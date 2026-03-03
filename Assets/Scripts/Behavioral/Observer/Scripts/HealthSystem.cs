@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 
-namespace DesignPatterns.Behavioral.Observer {
+namespace DesignPatterns.Behavioral.Observer
+{
     /// <summary>
     /// HPの変更イベントデータ
     /// </summary>
-    public readonly struct HealthChangedEventData {
+    public readonly struct HealthChangedEventData
+    {
         /// <summary>変更前のHP</summary>
         public readonly int OldHp;
 
@@ -20,7 +22,8 @@ namespace DesignPatterns.Behavioral.Observer {
         /// <param name="oldHp">変更前のHP</param>
         /// <param name="newHp">変更後のHP</param>
         /// <param name="maxHp">最大HP</param>
-        public HealthChangedEventData(int oldHp, int newHp, int maxHp) {
+        public HealthChangedEventData(int oldHp, int newHp, int maxHp)
+        {
             OldHp = oldHp;
             NewHp = newHp;
             MaxHp = maxHp;
@@ -30,7 +33,8 @@ namespace DesignPatterns.Behavioral.Observer {
     /// <summary>
     /// HPの変更を監視するオブザーバーインターフェース（Observer）
     /// </summary>
-    public interface IHealthObserver {
+    public interface IHealthObserver
+    {
         /// <summary>
         /// HP変更通知を受け取る
         /// </summary>
@@ -45,7 +49,8 @@ namespace DesignPatterns.Behavioral.Observer {
     /// オブジェクト間の1対多の依存関係を定義し、
     /// 一方の状態変化が全ての依存オブジェクトに自動的に通知・更新される
     /// </summary>
-    public sealed class HealthSystem {
+    public sealed class HealthSystem
+    {
         /// <summary>最大HP</summary>
         private readonly int maxHp;
 
@@ -65,7 +70,8 @@ namespace DesignPatterns.Behavioral.Observer {
         /// HPシステムを初期化する
         /// </summary>
         /// <param name="maxHp">最大HP</param>
-        public HealthSystem(int maxHp) {
+        public HealthSystem(int maxHp)
+        {
             this.maxHp = maxHp;
             currentHp = maxHp;
         }
@@ -74,7 +80,8 @@ namespace DesignPatterns.Behavioral.Observer {
         /// オブザーバーを登録する
         /// </summary>
         /// <param name="observer">登録するオブザーバー</param>
-        public void Subscribe(IHealthObserver observer) {
+        public void Subscribe(IHealthObserver observer)
+        {
             observers.Add(observer);
         }
 
@@ -82,7 +89,8 @@ namespace DesignPatterns.Behavioral.Observer {
         /// オブザーバーの登録を解除する
         /// </summary>
         /// <param name="observer">解除するオブザーバー</param>
-        public void Unsubscribe(IHealthObserver observer) {
+        public void Unsubscribe(IHealthObserver observer)
+        {
             observers.Remove(observer);
         }
 
@@ -90,10 +98,12 @@ namespace DesignPatterns.Behavioral.Observer {
         /// ダメージを受ける
         /// </summary>
         /// <param name="amount">ダメージ量</param>
-        public void TakeDamage(int amount) {
+        public void TakeDamage(int amount)
+        {
             int oldHp = currentHp;
             currentHp = currentHp - amount;
-            if (currentHp < 0) {
+            if (currentHp < 0)
+            {
                 currentHp = 0;
             }
             NotifyObservers(oldHp, currentHp);
@@ -103,10 +113,12 @@ namespace DesignPatterns.Behavioral.Observer {
         /// HPを回復する
         /// </summary>
         /// <param name="amount">回復量</param>
-        public void Heal(int amount) {
+        public void Heal(int amount)
+        {
             int oldHp = currentHp;
             currentHp = currentHp + amount;
-            if (currentHp > maxHp) {
+            if (currentHp > maxHp)
+            {
                 currentHp = maxHp;
             }
             NotifyObservers(oldHp, currentHp);
@@ -117,9 +129,11 @@ namespace DesignPatterns.Behavioral.Observer {
         /// </summary>
         /// <param name="oldHp">変更前HP</param>
         /// <param name="newHp">変更後HP</param>
-        private void NotifyObservers(int oldHp, int newHp) {
+        private void NotifyObservers(int oldHp, int newHp)
+        {
             var data = new HealthChangedEventData(oldHp, newHp, maxHp);
-            for (int i = 0; i < observers.Count; i++) {
+            for (int i = 0; i < observers.Count; i++)
+            {
                 observers[i].OnHealthChanged(data);
             }
         }

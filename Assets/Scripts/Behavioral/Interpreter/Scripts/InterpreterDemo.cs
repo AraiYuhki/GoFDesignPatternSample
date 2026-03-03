@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DesignPatterns.Behavioral.Interpreter {
+namespace DesignPatterns.Behavioral.Interpreter
+{
     /// <summary>
     /// Interpreterパターンのデモシーンを制御するクラス
     ///
@@ -10,7 +11,8 @@ namespace DesignPatterns.Behavioral.Interpreter {
     /// - MOVE/STATUS/REPEATコマンドをボタンで実行し、
     ///   文法の解釈と実行の仕組みを確認できる
     /// </summary>
-    public sealed class InterpreterDemo : PatternDemoBase {
+    public sealed class InterpreterDemo : PatternDemoBase
+    {
         /// <summary>MOVE UP 3 コマンドのボタン</summary>
         [SerializeField]
         private Button moveUpButton;
@@ -52,34 +54,42 @@ namespace DesignPatterns.Behavioral.Interpreter {
         private const int InitialY = 0;
 
         /// <inheritdoc/>
-        protected override string PatternName {
+        protected override string PatternName
+        {
             get { return "Interpreter"; }
         }
 
         /// <inheritdoc/>
-        protected override PatternCategory Category {
+        protected override PatternCategory Category
+        {
             get { return PatternCategory.Behavioral; }
         }
 
         /// <inheritdoc/>
-        protected override string Description {
+        protected override string Description
+        {
             get { return "簡易的な言語の文法を定義し、文を解釈する仕組みを提供する"; }
         }
 
         /// <inheritdoc/>
-        protected override void OnDemoStart() {
+        protected override void OnDemoStart()
+        {
             context = new GameContext(CharacterName, InitialX, InitialY);
 
-            if (moveUpButton != null) {
+            if (moveUpButton != null)
+            {
                 moveUpButton.onClick.AddListener(OnMoveUp);
             }
-            if (moveLeftButton != null) {
+            if (moveLeftButton != null)
+            {
                 moveLeftButton.onClick.AddListener(OnMoveLeft);
             }
-            if (statusButton != null) {
+            if (statusButton != null)
+            {
                 statusButton.onClick.AddListener(OnStatus);
             }
-            if (repeatButton != null) {
+            if (repeatButton != null)
+            {
                 repeatButton.onClick.AddListener(OnRepeat);
             }
 
@@ -88,22 +98,26 @@ namespace DesignPatterns.Behavioral.Interpreter {
         }
 
         /// <summary>MOVE UP 3 コマンドを実行する</summary>
-        private void OnMoveUp() {
+        private void OnMoveUp()
+        {
             ExecuteCommand(MoveUpCommand);
         }
 
         /// <summary>MOVE LEFT 2 コマンドを実行する</summary>
-        private void OnMoveLeft() {
+        private void OnMoveLeft()
+        {
             ExecuteCommand(MoveLeftCommand);
         }
 
         /// <summary>STATUS コマンドを実行する</summary>
-        private void OnStatus() {
+        private void OnStatus()
+        {
             ExecuteCommand(StatusCommand);
         }
 
         /// <summary>REPEAT 3 MOVE RIGHT 1 コマンドを実行する</summary>
-        private void OnRepeat() {
+        private void OnRepeat()
+        {
             ExecuteCommand(RepeatCommand);
         }
 
@@ -111,11 +125,13 @@ namespace DesignPatterns.Behavioral.Interpreter {
         /// コマンド文字列を解析・実行してログに表示する
         /// </summary>
         /// <param name="commandText">コマンド文字列</param>
-        private void ExecuteCommand(string commandText) {
+        private void ExecuteCommand(string commandText)
+        {
             InGameLogger.Log($"--- コマンド: {commandText} ---", LogColor.Yellow);
 
             IExpression expression = CommandParser.Parse(commandText);
-            if (expression == null) {
+            if (expression == null)
+            {
                 InGameLogger.Log("コマンドを解析できませんでした", LogColor.Red);
                 return;
             }

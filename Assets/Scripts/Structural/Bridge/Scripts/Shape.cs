@@ -1,4 +1,5 @@
-namespace DesignPatterns.Structural.Bridge {
+namespace DesignPatterns.Structural.Bridge
+{
     /// <summary>
     /// 形状の抽象クラス（Abstraction）
     ///
@@ -10,7 +11,8 @@ namespace DesignPatterns.Structural.Bridge {
     /// 抽象化と実装を分離し、それぞれ独立に変更できるようにする
     /// 形状（円・四角）と色（赤・青・緑）の組み合わせを、継承の爆発なしに実現する
     /// </summary>
-    public abstract class Shape {
+    public abstract class Shape
+    {
         /// <summary>この形状に適用する色の実装</summary>
         protected readonly IColorImplementor colorImplementor;
 
@@ -21,7 +23,8 @@ namespace DesignPatterns.Structural.Bridge {
         /// 形状を生成する
         /// </summary>
         /// <param name="colorImplementor">適用する色の実装</param>
-        protected Shape(IColorImplementor colorImplementor) {
+        protected Shape(IColorImplementor colorImplementor)
+        {
             this.colorImplementor = colorImplementor;
         }
 
@@ -34,7 +37,8 @@ namespace DesignPatterns.Structural.Bridge {
     /// <summary>
     /// 円形状（RefinedAbstraction）
     /// </summary>
-    public sealed class Circle : Shape {
+    public sealed class Circle : Shape
+    {
         /// <summary>円の半径</summary>
         private readonly float radius;
 
@@ -46,12 +50,14 @@ namespace DesignPatterns.Structural.Bridge {
         /// </summary>
         /// <param name="colorImplementor">適用する色</param>
         /// <param name="radius">半径</param>
-        public Circle(IColorImplementor colorImplementor, float radius) : base(colorImplementor) {
+        public Circle(IColorImplementor colorImplementor, float radius) : base(colorImplementor)
+        {
             this.radius = radius;
         }
 
         /// <inheritdoc/>
-        public override void Draw() {
+        public override void Draw()
+        {
             InGameLogger.Log(
                 $"● {colorImplementor.ColorName}い{ShapeName}を描画（半径: {radius}）",
                 LogColor.Green
@@ -62,7 +68,8 @@ namespace DesignPatterns.Structural.Bridge {
     /// <summary>
     /// 四角形状（RefinedAbstraction）
     /// </summary>
-    public sealed class Rectangle : Shape {
+    public sealed class Rectangle : Shape
+    {
         /// <summary>幅</summary>
         private readonly float width;
 
@@ -78,13 +85,15 @@ namespace DesignPatterns.Structural.Bridge {
         /// <param name="colorImplementor">適用する色</param>
         /// <param name="width">幅</param>
         /// <param name="height">高さ</param>
-        public Rectangle(IColorImplementor colorImplementor, float width, float height) : base(colorImplementor) {
+        public Rectangle(IColorImplementor colorImplementor, float width, float height) : base(colorImplementor)
+        {
             this.width = width;
             this.height = height;
         }
 
         /// <inheritdoc/>
-        public override void Draw() {
+        public override void Draw()
+        {
             InGameLogger.Log(
                 $"■ {colorImplementor.ColorName}い{ShapeName}を描画（{width} x {height}）",
                 LogColor.Green

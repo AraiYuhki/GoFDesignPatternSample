@@ -1,10 +1,12 @@
-namespace DesignPatterns.Behavioral.Visitor {
+namespace DesignPatterns.Behavioral.Visitor
+{
     /// <summary>
     /// スキルツリーの各ノードを訪問するVisitorインターフェース
     /// Visitorパターンにおける Visitor に相当し、
     /// ノードの型ごとに異なる処理を定義する
     /// </summary>
-    public interface ISkillTreeVisitor {
+    public interface ISkillTreeVisitor
+    {
         /// <summary>
         /// 攻撃スキルノードを訪問する
         /// </summary>

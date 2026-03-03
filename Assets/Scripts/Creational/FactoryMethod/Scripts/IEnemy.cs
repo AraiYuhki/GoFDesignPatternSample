@@ -1,11 +1,13 @@
-namespace DesignPatterns.Creational.FactoryMethod {
+namespace DesignPatterns.Creational.FactoryMethod
+{
     /// <summary>
     /// 敵キャラクターのインターフェース（Product）
     ///
     /// 【Factory Methodパターンにおける役割】
     /// ファクトリが生成するプロダクトの共通インターフェースを定義する
     /// </summary>
-    public interface IEnemy {
+    public interface IEnemy
+    {
         /// <summary>敵の名前</summary>
         string Name { get; }
 

@@ -1,10 +1,12 @@
-namespace DesignPatterns.Behavioral.Visitor {
+namespace DesignPatterns.Behavioral.Visitor
+{
     /// <summary>
     /// スキルツリーのノードを表すインターフェース
     /// Visitorパターンにおける Element に相当し、
     /// Visitorの受け入れメソッドを定義する
     /// </summary>
-    public interface ISkillNode {
+    public interface ISkillNode
+    {
         /// <summary>スキル名を取得する</summary>
         string SkillName { get; }
 

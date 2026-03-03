@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DesignPatterns.Behavioral.Visitor {
+namespace DesignPatterns.Behavioral.Visitor
+{
     /// <summary>
     /// Visitorパターンのデモシーンを制御するクラス
     ///
@@ -11,7 +12,8 @@ namespace DesignPatterns.Behavioral.Visitor {
     /// - コスト計算Visitorと効果計算Visitorを切り替えて、
     ///   データ構造を変更せずに異なる処理を実行する様子を確認できる
     /// </summary>
-    public sealed class VisitorDemo : PatternDemoBase {
+    public sealed class VisitorDemo : PatternDemoBase
+    {
         /// <summary>コスト計算ボタン</summary>
         [SerializeField]
         private Button calculateCostButton;
@@ -30,36 +32,43 @@ namespace DesignPatterns.Behavioral.Visitor {
         private EffectCalculator effectCalculator;
 
         /// <inheritdoc/>
-        protected override string PatternName {
+        protected override string PatternName
+        {
             get { return "Visitor"; }
         }
 
         /// <inheritdoc/>
-        protected override PatternCategory Category {
+        protected override PatternCategory Category
+        {
             get { return PatternCategory.Behavioral; }
         }
 
         /// <inheritdoc/>
-        protected override string Description {
+        protected override string Description
+        {
             get { return "データ構造と処理を分離し、新しい処理を構造を変更せずに追加する"; }
         }
 
         /// <inheritdoc/>
-        protected override void OnDemoStart() {
+        protected override void OnDemoStart()
+        {
             costCalculator = new CostCalculator();
             effectCalculator = new EffectCalculator();
 
             InitializeSkillNodes();
 
-            if (calculateCostButton != null) {
+            if (calculateCostButton != null)
+            {
                 calculateCostButton.onClick.AddListener(OnCalculateCost);
             }
-            if (calculateEffectsButton != null) {
+            if (calculateEffectsButton != null)
+            {
                 calculateEffectsButton.onClick.AddListener(OnCalculateEffects);
             }
 
             InGameLogger.Log("スキルツリーを作成しました", LogColor.Orange);
-            for (int i = 0; i < skillNodes.Count; i++) {
+            for (int i = 0; i < skillNodes.Count; i++)
+            {
                 ISkillNode node = skillNodes[i];
                 InGameLogger.Log($"  {node.SkillName} (Lv.{node.Level})", LogColor.White);
             }
@@ -69,7 +78,8 @@ namespace DesignPatterns.Behavioral.Visitor {
         /// <summary>
         /// スキルノードを初期化する
         /// </summary>
-        private void InitializeSkillNodes() {
+        private void InitializeSkillNodes()
+        {
             skillNodes.Add(new AttackSkillNode("パワースラッシュ", 3, 15));
             skillNodes.Add(new AttackSkillNode("連続斬り", 2, 10));
             skillNodes.Add(new DefenseSkillNode("アイアンガード", 4, 12));
@@ -79,11 +89,13 @@ namespace DesignPatterns.Behavioral.Visitor {
         }
 
         /// <summary>コスト計算Visitorで全ノードを訪問する</summary>
-        private void OnCalculateCost() {
+        private void OnCalculateCost()
+        {
             InGameLogger.Log("--- コスト計算 ---", LogColor.Yellow);
             costCalculator.Reset();
 
-            for (int i = 0; i < skillNodes.Count; i++) {
+            for (int i = 0; i < skillNodes.Count; i++)
+            {
                 skillNodes[i].Accept(costCalculator);
             }
 
@@ -91,11 +103,13 @@ namespace DesignPatterns.Behavioral.Visitor {
         }
 
         /// <summary>効果計算Visitorで全ノードを訪問する</summary>
-        private void OnCalculateEffects() {
+        private void OnCalculateEffects()
+        {
             InGameLogger.Log("--- 効果計算 ---", LogColor.Yellow);
             effectCalculator.Reset();
 
-            for (int i = 0; i < skillNodes.Count; i++) {
+            for (int i = 0; i < skillNodes.Count; i++)
+            {
                 skillNodes[i].Accept(effectCalculator);
             }
 

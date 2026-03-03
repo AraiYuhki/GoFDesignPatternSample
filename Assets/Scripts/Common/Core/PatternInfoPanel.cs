@@ -1,12 +1,14 @@
 using TMPro;
 using UnityEngine;
 
-namespace DesignPatterns {
+namespace DesignPatterns
+{
     /// <summary>
     /// パターンの説明情報を表示するUIパネル
     /// 各デモシーンに配置し、パターンの名前・カテゴリ・概要を表示する
     /// </summary>
-    public sealed class PatternInfoPanel : MonoBehaviour {
+    public sealed class PatternInfoPanel : MonoBehaviour
+    {
         /// <summary>パターン名表示用テキスト</summary>
         [SerializeField]
         private TextMeshProUGUI patternNameText;
@@ -25,14 +27,18 @@ namespace DesignPatterns {
         /// <param name="patternName">パターン名</param>
         /// <param name="category">カテゴリ名</param>
         /// <param name="description">概要説明</param>
-        public void SetInfo(string patternName, string category, string description) {
-            if (patternNameText != null) {
+        public void SetInfo(string patternName, string category, string description)
+        {
+            if (patternNameText != null)
+            {
                 patternNameText.text = patternName;
             }
-            if (categoryText != null) {
+            if (categoryText != null)
+            {
                 categoryText.text = category;
             }
-            if (descriptionText != null) {
+            if (descriptionText != null)
+            {
                 descriptionText.text = description;
             }
         }
