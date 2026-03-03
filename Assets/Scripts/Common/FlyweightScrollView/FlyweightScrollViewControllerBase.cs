@@ -258,8 +258,8 @@ namespace Xeon.Common.FlyweightScrollView
         /// <param name="setDirty">IsDirtyフラグを設定するかどうか</param>
         public virtual void FixToLast(bool setDirty = true)
         {
-            tailIndex = ItemCount;
-            headIndex = Mathf.Max(0, tailIndex - itemList.Count);
+            tailIndex = ItemCount - 1;
+            headIndex = Mathf.Max(0, ItemCount - itemList.Count);
             if (setDirty)
                 IsDirty = true;
         }
