@@ -8,7 +8,8 @@
 | Phase 1 | 生成パターン | 5 |
 | Phase 2 | 構造パターン | 7 |
 | Phase 3 | 振る舞いパターン | 11 |
-| Phase 4 | 統合・改善 | - |
+| Phase 4 | ノードグラフ可視化システム | - |
+| Phase 5 | 統合・改善 | - |
 
 ---
 
@@ -164,19 +165,99 @@
 
 ---
 
-## Phase 4: 統合・改善
+## Phase 4: ノードグラフ可視化システム
 
-### 4.1 統合
+パターンの構造をノード（矩形）とエッジ（線・矢印）で視覚的に表示するシステム。
+スクリプトは実装済み。Unity Editor でのプレハブ作成・レイアウト変更が必要。
+
+### 4.1 プレハブ作成（Unity Editor 作業）
+
+以下を順番に作成する。詳細な仕様は `scene_specification.md` の「共通UIプレハブ」セクションを参照。
+
+- [ ] **4.1.1** GraphNode.prefab を作成する
+  - 配置場所: `Assets/_Common/Prefabs/GraphNode.prefab`
+  - 空の GameObject を作成し、RectTransform + CanvasGroup を追加
+  - `GraphNodeView` コンポーネントを追加
+  - 子要素に Border (Image)、Background (Image)、NameLabel (TMP_Text)、StateLabel (TMP_Text) を作成
+  - GraphNodeView の SerializeField を各子要素に接続
+  - サイズ: 160 x 60、Pivot: (0.5, 0.5)
+
+- [ ] **4.1.2** GraphEdge.prefab を作成する
+  - 配置場所: `Assets/_Common/Prefabs/GraphEdge.prefab`
+  - 空の GameObject を作成し、RectTransform を追加
+  - `GraphEdgeView` コンポーネントを追加
+  - 子要素に LineRenderer (空の GameObject + `UILineRenderer` コンポーネント)、Label (TMP_Text) を作成
+  - GraphEdgeView の SerializeField を各子要素に接続
+  - LineRenderer の Raycast Target を false に設定
+
+- [ ] **4.1.3** NodeGraphView.prefab を作成する
+  - 配置場所: `Assets/_Common/Prefabs/NodeGraphView.prefab`
+  - 空の GameObject を作成し、RectTransform (Stretch-Stretch) を設定
+  - `NodeGraphView` コンポーネントを追加
+  - 子要素に GraphContainer (RectTransform: Stretch-Stretch, Padding 20px) を作成
+  - NodeGraphView の SerializeField を接続:
+    - `graphContainer` → GraphContainer
+    - `nodePrefab` → GraphNode.prefab
+    - `edgePrefab` → GraphEdge.prefab
+
+### 4.2 DemoSceneCanvas レイアウト変更（Unity Editor 作業）
+
+既存の DemoSceneCanvas.prefab を変更して、3カラムレイアウトにする。
+
+- [ ] **4.2.1** ContentArea を3カラム構成にする
+  - ContentArea に HorizontalLayoutGroup を設定（Child Force Expand Height = true）
+  - ControlPanel: Layout Element → 幅 20%（Min Width: 250）
+  - GraphPanel: Layout Element → Flexible Width: 1（幅 40%相当）
+  - LogPanel: Layout Element → Flexible Width: 1（幅 40%相当）
+
+- [ ] **4.2.2** GraphPanel を ContentArea に追加する
+  - ControlPanel と LogPanel の **間** に GraphPanel (Image: `#1A1A2E`) を作成
+  - GraphPanel の子に NodeGraphView.prefab をインスタンス化
+  - GraphPanel を **非アクティブ** に設定（初期状態で非表示）
+
+- [ ] **4.2.3** GraphPanel 非表示時のフォールバックを確認する
+  - GraphPanel が非アクティブの場合、ControlPanel(40%) + LogPanel(60%) の2カラムになることを確認
+
+### 4.3 各デモシーンの SerializeField 接続（Unity Editor 作業）
+
+PatternDemoBase に `nodeGraphView` フィールドが追加されたため、グラフを使用するデモシーンで接続が必要。
+
+- [ ] **4.3.1** まず1つのデモシーンで動作確認する（推奨: AbstractFactoryDemo）
+  - AbstractFactoryDemo の `nodeGraphView` フィールドに NodeGraphView を接続
+  - Play モードで正常にグラフが表示されることを確認
+  - ノードの表示、エッジの描画、アニメーションが動作することを確認
+
+- [ ] **4.3.2** 残りのデモシーンで順次接続する
+  - 各デモの XXXDemo コンポーネントの `nodeGraphView` フィールドに NodeGraphView を接続
+  - グラフ未使用のデモでは null のまま（接続不要）
+
+### 4.4 動作確認チェックリスト
+
+- [ ] GraphNode が正しく表示される（名前・状態テキスト・色）
+- [ ] GraphEdge の線と矢印が正しく描画される
+- [ ] 破線エッジが正しく描画される
+- [ ] ノードパルスアニメーションが動作する
+- [ ] エッジパルスアニメーションが動作する
+- [ ] ノード生成アニメーション（スケール 0→1）が動作する
+- [ ] ノード破棄アニメーション（フェードアウト）が動作する
+- [ ] GraphPanel 非表示時に ControlPanel が全領域を使用する
+- [ ] 既存のログ表示が正常に動作する（右パネル）
+
+---
+
+## Phase 5: 統合・改善
+
+### 5.1 統合
 - [ ] 全パターンのナビゲーション整備
 - [ ] パターン間の比較機能
 - [ ] 検索・フィルター機能
 
-### 4.2 ドキュメント
+### 5.2 ドキュメント
 - [ ] 各パターンの詳細説明追加
 - [ ] コード解説の充実
 - [ ] 使用例・応用例の追加
 
-### 4.3 品質向上
+### 5.3 品質向上
 - [ ] パフォーマンス最適化
 - [ ] UIの一貫性確認
 - [ ] バグ修正・改善
@@ -202,7 +283,8 @@
 | M2: 生成パターン完了 | Phase 1完了 | 完了 |
 | M3: 構造パターン完了 | Phase 2完了 | 完了 |
 | M4: 振る舞いパターン完了 | Phase 3完了 | 完了 |
-| M5: プロジェクト完成 | Phase 4完了 | 未着手 |
+| M5: ノードグラフ可視化 | Phase 4完了 | 作業中（スクリプト実装済み、GUI作業待ち） |
+| M6: プロジェクト完成 | Phase 5完了 | 未着手 |
 
 ---
 

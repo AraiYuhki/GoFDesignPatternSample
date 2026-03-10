@@ -24,23 +24,22 @@
 全デモシーンは以下の共通レイアウトを使用する。
 
 ```
-┌─────────────────────────────────────────────────┐
-│ ■ ヘッダー（上部固定 / 高さ 100px）               │
-│  [← 戻る]  パターン名  カテゴリ                    │
-├─────────────────────┬───────────────────────────┤
-│                     │                           │
-│  操作パネル（左）     │  ログパネル（右）            │
-│  幅: 40%            │  幅: 60%                   │
-│                     │                           │
-│  ・操作ボタン群       │  ・InGameLogger            │
-│  ・パターン固有UI     │  ・スクロール可能            │
-│                     │                           │
-│                     │                           │
-│                     │                           │
-├─────────────────────┴───────────────────────────┤
-│ ■ フッター（下部固定 / 高さ 60px）                 │
-│  パターンの説明文                                  │
-└─────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────┐
+│ ■ ヘッダー（上部固定 / 高さ 100px）                        │
+│  [← 戻る]  パターン名  カテゴリ                             │
+├──────────┬─────────────────────┬─────────────────────────┤
+│ 操作パネル │  グラフパネル（中央）  │  ログパネル（右）         │
+│ 幅: 20%  │  幅: 40%            │  幅: 40%                │
+│          │                     │                         │
+│ ・ボタン群 │  ・NodeGraphView     │  ・InGameLogger          │
+│ ・固有UI  │  ・パターン構造の     │  ・スクロール可能          │
+│          │    ノード＆エッジ表示  │                         │
+│          │  ※未使用時は非表示    │                         │
+│          │  → 操作+ログの2列に   │                         │
+├──────────┴─────────────────────┴─────────────────────────┤
+│ ■ フッター（下部固定 / 高さ 60px）                          │
+│  パターンの説明文                                           │
+└──────────────────────────────────────────────────────────┘
 ```
 
 ### カラーテーマ
@@ -50,6 +49,7 @@
 | 背景（共通） | `#1E1E2E` | シーン全体の背景 |
 | ヘッダー背景 | `#2D2D44` | ヘッダーバー |
 | 操作パネル背景 | `#252538` | 左側パネル |
+| グラフパネル背景 | `#1A1A2E` | 中央グラフエリア |
 | ログパネル背景 | `#1A1A2E` | 右側ログエリア |
 | 生成パターン アクセント | `#5B9BD5`（青） | ヘッダーライン、ボタン |
 | 構造パターン アクセント | `#70AD47`（緑） | ヘッダーライン、ボタン |
@@ -88,10 +88,12 @@ DemoSceneCanvas                     [Canvas + CanvasScaler + GraphicRaycaster]
 │   ├── PatternNameText (TMP)       パターン名
 │   └── CategoryText (TMP)          カテゴリ名
 ├── ContentArea                     [HorizontalLayoutGroup]
-│   ├── ControlPanel                [Image: #252538, VerticalLayoutGroup]
+│   ├── ControlPanel                [Image: #252538, VerticalLayoutGroup, 幅: 20%]
 │   │   └── ButtonContainer         [VerticalLayoutGroup, Spacing: 12]
 │   │       └── (各シーン固有のボタンを配置)
-│   └── LogPanel                    [Image: #1A1A2E]
+│   ├── GraphPanel                  [Image: #1A1A2E, 幅: 40%]
+│   │   └── NodeGraphView           [NodeGraphView.prefab のインスタンス]
+│   └── LogPanel                    [Image: #1A1A2E, 幅: 40%]
 │       └── LogScrollView           [ScrollRect]
 │           └── Viewport
 │               └── Content
@@ -104,6 +106,18 @@ DemoSceneCanvas                     [Canvas + CanvasScaler + GraphicRaycaster]
 **コンポーネント接続**:
 - `InGameLogger.logText` → `LogText (TMP)`
 - `InGameLogger.maxLines` → `30`
+
+**ContentArea 設定**:
+- HorizontalLayoutGroup: Child Force Expand Height = true
+- ControlPanel: Layout Element → Preferred Width: 20%（Min Width: 250）
+- GraphPanel: Layout Element → Flexible Width: 1
+- LogPanel: Layout Element → Flexible Width: 1
+
+**GraphPanel 初期状態**:
+- GraphPanel は初期状態で **非アクティブ** にしておくこと
+- NodeGraphView.Initialize() が呼ばれた際に自動で有効化される
+- グラフ未使用のデモシーンでは、GraphPanel が非表示になり ControlPanel + LogPanel の2カラム構成になる
+  - この場合 ControlPanel: 40%、LogPanel: 60% の比率で表示される
 
 ### 2. PatternInfoPanel（プレハブ）
 
@@ -131,7 +145,119 @@ DemoButton                          [Button + Image: #3A3A5C, 角丸8px]
 **サイズ**: 幅 Stretch（親に追従）、高さ 50px
 **Transition**: Color Tint（Normal→Hover→Pressed）
 
-### 4. EventSystem
+### 4. NodeGraphView（プレハブ）
+
+**配置場所**: `Assets/_Common/Prefabs/NodeGraphView.prefab`
+
+パターンの構造をノードとエッジで可視化するグラフビューのプレハブ。
+ControlPanelの代わりに左側パネルに配置する。
+
+**階層構造**:
+```
+NodeGraphView                       [RectTransform + NodeGraphView コンポーネント]
+└── GraphContainer                  [RectTransform: Stretch全方向、Padding 20px]
+    └── (実行時にノード・エッジが動的生成される)
+```
+
+**コンポーネント設定（NodeGraphView）**:
+| フィールド | 接続先 | 値 |
+|-----------|-------|-----|
+| `graphContainer` | GraphContainer | - |
+| `nodePrefab` | GraphNode.prefab | - |
+| `edgePrefab` | GraphEdge.prefab | - |
+| `defaultNodeColor` | - | `#808080` (グレー) |
+| `activeNodeColor` | - | `#5B9BD5` (青) |
+| `defaultEdgeColor` | - | `#999999` (ライトグレー) |
+
+**RectTransform設定**:
+- Anchor: Stretch-Stretch
+- Left/Right/Top/Bottom: 0
+
+### 5. GraphNode（プレハブ）
+
+**配置場所**: `Assets/_Common/Prefabs/GraphNode.prefab`
+
+グラフ上のノード（クラスやオブジェクト）1つを表す矩形UI。
+
+**階層構造**:
+```
+GraphNode                           [RectTransform + CanvasGroup + GraphNodeView コンポーネント]
+├── Border                          [Image: #808080, Outline風]
+├── Background                      [Image: #333333E6, 角丸なし]
+├── NameLabel (TMP)                 クラス名 / オブジェクト名
+└── StateLabel (TMP)                状態テキスト（例: "HP: 100"）
+```
+
+**サイズ**: 幅 160px、高さ 60px（Pivot: 0.5, 0.5）
+
+**コンポーネント設定（GraphNodeView）**:
+| フィールド | 接続先 |
+|-----------|-------|
+| `backgroundImage` | Background |
+| `borderImage` | Border |
+| `nameLabel` | NameLabel (TMP) |
+| `stateLabel` | StateLabel (TMP) |
+
+**NameLabel設定**:
+- Font Size: 16、Bold
+- Alignment: Center-Middle
+- Color: `#E0E0E0`
+- RectTransform: 上半分（高さの60%）、左右Padding 8px
+
+**StateLabel設定**:
+- Font Size: 12、Regular
+- Alignment: Center-Middle
+- Color: `#A0A0B0`
+- RectTransform: 下半分（高さの40%）、左右Padding 8px
+- 初期状態: 非アクティブ（空文字の場合スクリプト側で非表示にする）
+
+**Border実装方法（2通りから選択）**:
+
+方法A: Outline コンポーネント使用
+- Background に `Outline` コンポーネントを追加
+- Effect Distance: (2, 2)
+- Effect Color: `#808080`
+- この場合 Border の Image は不要
+
+方法B: 2重Image方式
+- Border: Image `#808080`、サイズ = GraphNode と同じ（Stretch）
+- Background: Image `#333333E6`、上下左右に 2px のマージン
+- Border を Background より後ろ（Hierarchy上で先）に配置
+
+### 6. GraphEdge（プレハブ）
+
+**配置場所**: `Assets/_Common/Prefabs/GraphEdge.prefab`
+
+ノード間の関係（依存・通知・継承など）を線と矢印で表す。
+
+**階層構造**:
+```
+GraphEdge                           [RectTransform + GraphEdgeView コンポーネント]
+├── LineRenderer                    [UILineRenderer コンポーネント (カスタムGraphic)]
+└── Label (TMP)                     エッジラベル（例: "notify"）
+```
+
+**コンポーネント設定（GraphEdgeView）**:
+| フィールド | 接続先 |
+|-----------|-------|
+| `lineRenderer` | LineRenderer の UILineRenderer コンポーネント |
+| `labelText` | Label (TMP) |
+
+**RectTransform設定**:
+- GraphEdge: Stretch-Stretch（GraphContainerと同じ領域）
+- GraphEdge の RectTransform は親（GraphContainer）にフィットさせる
+
+**LineRenderer (UILineRenderer) 設定**:
+- Raycast Target: **false**（クリック判定不要）
+- Color: `#999999`
+
+**Label設定**:
+- Font Size: 11、Regular
+- Alignment: Center-Middle
+- Color: `#A0A0B0`
+- 初期状態: 非アクティブ
+
+### 7. EventSystem
 
 **各シーンに必須**: EventSystem + InputSystemUIInputModule
 
@@ -244,6 +370,20 @@ MainMenu
 | テキスト上段 | パターン名（英語）サイズ 22 Bold |
 | テキスト下段 | パターン名（日本語）サイズ 14 |
 | クリック | `SceneNavigator.LoadScene("XXXDemo")` |
+
+---
+
+## 全デモシーン共通の SerializeField 追加
+
+NodeGraphView の導入に伴い、全デモシーンの Demo コンポーネント（PatternDemoBase 派生クラス）に以下のフィールドが追加されている。
+
+| フィールド | 接続先 | 備考 |
+|-----------|-------|------|
+| `nodeGraphView` | DemoSceneCanvas > ContentArea > GraphPanel > NodeGraphView | グラフ未使用のデモでは null のまま |
+
+各シーンごとの接続作業は以下のとおり:
+1. DemoSceneCanvas プレハブ内の NodeGraphView を、シーン上の Demo コンポーネントの `nodeGraphView` フィールドにドラッグ接続する
+2. グラフを使用しないデモでは接続不要（null のままで問題なし）
 
 ---
 

@@ -453,7 +453,7 @@ namespace Xeon.Common.FlyweightScrollView
             if (isAtLastSticky && isPositionLast)
             {
                 scrollView.normalizedPosition = Vector2.zero;
-                FixToLast(setDirty: false);
+                FixToLast();
                 return;
             }
             if (tailIndex >= ItemCount - 1)

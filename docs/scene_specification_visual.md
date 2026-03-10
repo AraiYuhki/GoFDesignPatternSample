@@ -7,11 +7,16 @@
 ```text
 +--------------------------------------------------------------------------------------------------+
 | Header: [BackButton] [PatternNameText] [CategoryText]                                            |
-+-----------------------------------------------+--------------------------------------------------+
-| ControlPanel (Scene-specific UI)              | LogPanel (InGameLogger)                          |
-| - Buttons / Labels / Spacer                   | - LogScrollView                                  |
-| - Vertical layout                             | - Runtime logs                                   |
-+-----------------------------------------------+--------------------------------------------------+
++-------------+-------------------------------+----------------------------------------------------+
+| ControlPanel| GraphPanel (幅 40%)           | LogPanel (幅 40%)                                  |
+| (幅 20%)    |                               |                                                    |
+|             | NodeGraphView                 | InGameLogger                                       |
+| ・ボタン群   | ノードとエッジで               | - LogScrollView                                    |
+| ・固有UI    | パターン構造を可視化            | - Runtime logs                                     |
+|             |                               |                                                    |
+|             | ※ 未使用時は非表示             |                                                    |
+|             | → 操作(40%)+ログ(60%)の2列に   |                                                    |
++-------------+-------------------------------+----------------------------------------------------+
 | Footer: [DescriptionText]                                                                       |
 +--------------------------------------------------------------------------------------------------+
 ```
@@ -24,14 +29,22 @@ DemoSceneCanvas
 │  ├─ BackButton
 │  ├─ PatternNameText
 │  └─ CategoryText
-├─ ContentArea
-│  ├─ ControlPanel
+├─ ContentArea                     [HorizontalLayoutGroup]
+│  ├─ ControlPanel (幅 20%)        操作ボタン群
 │  │  └─ ButtonContainer
-│  └─ LogPanel
+│  ├─ GraphPanel (幅 40%)          ← ノードグラフ表示エリア
+│  │  └─ NodeGraphView            ← NodeGraphView.prefab のインスタンス
+│  └─ LogPanel (幅 40%)            ログ表示エリア
 │     └─ LogScrollView
 └─ Footer
    └─ DescriptionText
 ```
+
+### GraphPanel について
+
+- GraphPanel は初期状態で **非アクティブ**（`SetActive(false)`）
+- スクリプト側で `NodeGraphView.Initialize()` が呼ばれると自動でアクティブになる
+- グラフ未使用のデモでは非表示になり、ControlPanel(40%) + LogPanel(60%) の2カラム構成になる
 
 ## 2. MainMenu レイアウト
 

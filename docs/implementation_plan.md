@@ -131,6 +131,19 @@ PatternName/
 - **アニメーション**: オブジェクト生成や状態変化を視覚的に表現
 - **図解**: クラス関係を動的に図示
 
+### ノードグラフ可視化システム
+
+パターンの構造をノード（矩形UI）とエッジ（線・矢印）で視覚的に表示するシステム。
+画面左側にグラフ、右側にログを表示するハイブリッド構成。
+
+**スクリプト**: `Assets/Scripts/Common/NodeGraph/` に実装済み
+- `Data/` — GraphData, NodeData, EdgeData, NodeState, EdgeStyle
+- `View/` — NodeGraphView, GraphNodeView, GraphEdgeView, UILineRenderer
+- `Animation/` — GraphAnimator
+- `Layout/` — IGraphLayoutStrategy, ManualLayoutStrategy
+
+**GUI作業**: Unity Editor での プレハブ作成・レイアウト変更が必要（`roadmap.md` Phase 4 参照）
+
 ---
 
 ## 技術仕様

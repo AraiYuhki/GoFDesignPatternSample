@@ -1,3 +1,4 @@
+using DesignPatterns.NodeGraph;
 using UnityEngine;
 
 namespace DesignPatterns
@@ -12,6 +13,10 @@ namespace DesignPatterns
         [SerializeField]
         private PatternInfoPanel infoPanel;
 
+        /// <summary>ノードグラフ表示用のビュー（オプション）</summary>
+        [SerializeField]
+        private NodeGraphView nodeGraphView;
+
         /// <summary>パターン名を返す</summary>
         protected abstract string PatternName { get; }
 
@@ -20,6 +25,9 @@ namespace DesignPatterns
 
         /// <summary>パターンの概要説明を返す</summary>
         protected abstract string Description { get; }
+
+        /// <summary>ノードグラフビューへのアクセサ</summary>
+        protected NodeGraphView GraphView => nodeGraphView;
 
         /// <summary>
         /// カテゴリに対応するログの色を返す
@@ -72,6 +80,42 @@ namespace DesignPatterns
         /// </summary>
         protected virtual void OnDemoStart()
         {
+        }
+
+        /// <summary>
+        /// GraphDataを生成し、NodeGraphViewに初期化・カテゴリ色を設定して返す
+        /// GraphViewがnullの場合はGraphDataのみ返す
+        /// </summary>
+        /// <param name="strategy">レイアウト戦略（省略時はManualLayoutStrategy）</param>
+        /// <returns>生成したGraphData</returns>
+        protected GraphData CreateGraphData(IGraphLayoutStrategy strategy = null)
+        {
+            var data = new GraphData();
+            if (nodeGraphView != null)
+            {
+                nodeGraphView.SetCategoryColor(GetCategoryUnityColor());
+                nodeGraphView.Initialize(data, strategy);
+            }
+            return data;
+        }
+
+        /// <summary>
+        /// カテゴリに対応するUnityのColorを返す
+        /// </summary>
+        /// <returns>カテゴリ色</returns>
+        private Color GetCategoryUnityColor()
+        {
+            switch (Category)
+            {
+                case PatternCategory.Creational:
+                    return new Color(0.36f, 0.61f, 0.84f, 1f);
+                case PatternCategory.Structural:
+                    return new Color(0.44f, 0.68f, 0.28f, 1f);
+                case PatternCategory.Behavioral:
+                    return new Color(0.93f, 0.49f, 0.19f, 1f);
+                default:
+                    return Color.white;
+            }
         }
 
         /// <summary>
