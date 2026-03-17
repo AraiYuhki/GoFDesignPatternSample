@@ -1,4 +1,5 @@
 using DesignPatterns.NodeGraph;
+using DesignPatterns.Visualization;
 using UnityEngine;
 
 namespace DesignPatterns
@@ -13,9 +14,13 @@ namespace DesignPatterns
         [SerializeField]
         private PatternInfoPanel infoPanel;
 
-        /// <summary>ノードグラフ表示用のビュー（オプション）</summary>
+        /// <summary>ノードグラフ表示用のビュー（オプション、UI図式用）</summary>
         [SerializeField]
         private NodeGraphView nodeGraphView;
+
+        /// <summary>2Dビジュアライゼーションレンダラー（オプション、2Dアニメーション用）</summary>
+        [SerializeField]
+        private VisualizationRenderer visualizationRenderer;
 
         /// <summary>パターン名を返す</summary>
         protected abstract string PatternName { get; }
@@ -28,6 +33,9 @@ namespace DesignPatterns
 
         /// <summary>ノードグラフビューへのアクセサ</summary>
         protected NodeGraphView GraphView => nodeGraphView;
+
+        /// <summary>2Dビジュアライゼーションレンダラーへのアクセサ</summary>
+        protected VisualizationRenderer VisRenderer => visualizationRenderer;
 
         /// <summary>
         /// カテゴリに対応するログの色を返す
