@@ -1,85 +1,88 @@
-# GoF デザインパターンサンプル
+# Unityで学ぶGoFデザインパターン視覚化プロジェクト
 
 ## プロジェクト名
 
-GoFDesignPatternSample
+GoF Design Pattern Sample
 
 ## 説明
 
-Gang of Four (GoF) の23種類のデザインパターンをUnityで視覚的にわかりやすく実装する学習用プロジェクト
+GoF（Gang of Four）の23デザインパターンをUnity上で視覚的にデモンストレーションする教材プロジェクト。
+各パターンのドメインモデルをステップ実行し、2Dアニメーションで動作を可視化する。
 
 ## 技術スタック
 
-- **Unity 6** (Universal Render Pipeline)
-- **対象プラットフォーム**: エディタ実行（学習用途）
-- **名前空間**: `DesignPatterns`, `DesignPatterns.Creational`, `DesignPatterns.Structural`, `DesignPatterns.Behavioral`
-- **主要パッケージ**: Input System, TextMeshPro (uGUI), URP
+- **Unity 6** (6000.0.58f2, Built-in Render Pipeline)
+- **対象プラットフォーム**: PC / エディタ
+- **名前空間**: `GoFPatterns`（Core / Patterns / UI の3層）
+- **エントリーポイント**: `AppBootstrap.cs`
 
-## プロジェクト構成
+## 主要ライブラリ
 
-```
-Assets/
-├── _Common/                    # 共通アセット・基盤クラス
-├── Scenes/                     # メインメニュー・パターン選択
-├── Creational/                 # 生成パターン (5種)
-│   ├── AbstractFactory/
-│   ├── Builder/
-│   ├── FactoryMethod/
-│   ├── Prototype/
-│   └── Singleton/
-├── Structural/                 # 構造パターン (7種)
-│   ├── Adapter/
-│   ├── Bridge/
-│   ├── Composite/
-│   ├── Decorator/
-│   ├── Facade/
-│   ├── Flyweight/
-│   └── Proxy/
-└── Behavioral/                 # 振る舞いパターン (11種)
-    ├── ChainOfResponsibility/
-    ├── Command/
-    ├── Interpreter/
-    ├── Iterator/
-    ├── Mediator/
-    ├── Memento/
-    ├── Observer/
-    ├── State/
-    ├── Strategy/
-    ├── TemplateMethod/
-    └── Visitor/
-```
+| ライブラリ | 用途 | 備考 |
+|---|---|---|
+| TextMeshPro | テキスト表示 | |
+| Unity Coroutine | アニメーション・ステップ実行 | TweenUtility で薄くラップ |
 
-各パターンフォルダ:
-```
-PatternName/
-├── Scripts/                    # C#スクリプト
-├── Prefabs/                    # プレハブ
-├── Scenes/                     # デモシーン (PatternNameDemo.unity)
-└── Materials/                  # マテリアル（必要に応じて）
-```
+## アセンブリ構成
+
+| アセンブリ | パス | 依存 |
+|---|---|---|
+| `GoFPatterns.Core` | `Assets/Project/Scripts/Core/` | TextMeshPro |
+| `GoFPatterns.Patterns` | `Assets/Project/Scripts/Patterns/` | Core |
+| `GoFPatterns.UI` | `Assets/Project/Scripts/UI/` | Core, Patterns, TextMeshPro |
+
+依存方向は Core ← Patterns ← UI の一方向のみ。逆方向参照禁止。
 
 ## フォルダ構成と編集ルール
 
 ### 変更可能
 
-- `Assets/_Common/Scripts/` — 共通基盤コード
-- `Assets/Creational/`, `Assets/Structural/`, `Assets/Behavioral/` 配下の `Scripts/` — パターン実装コード
-- `docs/` — ドキュメント
+- `Assets/Project/Scripts/` — 全スクリプト（新規作成・修正 OK）
+- `Assets/Project/ScriptableObjects/` — PatternDefinition アセット
+- `docs/` — ロードマップ・実装計画書
 
 ### 変更禁止
 
-- `Assets/Settings/` — URP設定
+- `Assets/Scripts/` — 旧実装（参照のみ、移植時はリファクタして再利用）
+- `Assets/Plugins/` — 外部ライブラリ
 - `ProjectSettings/` — プロジェクト設定ファイル
-- `.prefab` / `.unity` ファイルの直接編集
+- `.prefab` / `.unity` ファイルの直接編集（Unity Editor で行う）
 - `*.meta` — Unityメタデータファイル（削除・編集厳禁）
 
 ### テスト
 
-- `Assets/Tests/Editor/` — NUnit テスト
+- `Assets/Project/Tests/Editor/` — NUnit テスト
 - テストファイル命名: `*Test.cs`
 - `[TestFixture]` + `[Test]` パターン
 
+## アーキテクチャ
+
+### Core 層（`GoFPatterns.Core`）
+- `PatternDefinition` ScriptableObject、`PatternRepository`
+- `ScreenManager`（1シーン内パネル切り替え）、`BaseScreen`
+- `LogService`（ステップログ蓄積・通知）
+- `AppBootstrap`（起動時に PatternListScreen を表示）
+
+### Patterns 層（`GoFPatterns.Patterns`）
+- `IPatternDemo` / `BasePatternDemo` — デモ実行の共通基盤
+- `DemoScenario` / `DemoStep` — ステップ列管理
+- `DemoManager` — デモのライフサイクル統括（singleton MonoBehaviour）
+- `VisualizationRenderer` — RenderTexture + 専用カメラで2D空間をCanvasに投影
+- `VisualElement` / `VisualArrow` — 2D図形要素・矢印
+- `TweenUtility` — コルーチンベースのアニメーションユーティリティ
+- 各パターンの Domain / Visualization 実装
+
+### UI 層（`GoFPatterns.UI`）
+- `PatternListScreen` — パターンカード一覧
+- `PatternDetailScreen` — パターン詳細・デモ開始
+- `DemoScreen` — 再生制御・ログ表示・ビジュアライゼーション領域
+
 ## コーディング規約
+
+### 非同期処理
+- アニメーションや時間経過を伴う処理は **Coroutine（IEnumerator）** を使用する
+- コルーチンの命名は `動詞 + Coroutine` サフィックスを付ける（例: `PulseCoroutine`）
+- 外部公開する場合は `StartCoroutine()` でラップして `Coroutine` を返す
 
 ### 命名規約
 - クラス名: PascalCase
@@ -89,7 +92,10 @@ PatternName/
 - プライベートフィールド: camelCase
 - アクセス修飾子は必ず明示（`private` も省略しない）
 - 一般的な略称でない場合、名前の省略禁止
-- region 使用禁止
+
+### var の使用
+- 型が明確な場合のみ `var` 使用可
+- 型が推論できない場合は明示的に型を書く
 
 ### 定数
 - マジックナンバー禁止 → `const` または `static readonly` を使用
@@ -105,9 +111,9 @@ PatternName/
 ### コメント (XML ドキュメント)
 - クラス・インターフェイス・メソッド・フィールド・プロパティに XML コメント必須
 - コメント末尾に句読点・疑問符は付けない
-- 学習用プロジェクトのため、パターンの意図を説明するコメントを積極的に記載する
 
-コメントのフォーマットは以下のようにすること
+### partial クラス
+- 新規の partial 使用禁止（自動生成コードを除く）
 
 ```csharp
 /// <summary>説明</summary>
@@ -121,10 +127,8 @@ internal sealed class MyClass { }
 /// <summary>説明</summary>
 /// <param name="arg">説明</param>
 /// <returns>説明</returns>
-internal int MyMethod(int arg) { }
+public IEnumerator FadeOutCoroutine(float duration) { }
 ```
-### partial クラス
-- partial 使用禁止
 
 ## コードスタイル
 - インデント: スペース4つ
@@ -135,28 +139,12 @@ internal int MyMethod(int arg) { }
 
 ## Unity固有の規約
 - MonoBehaviourを継承するクラスは、Awake/Start/Update等のライフサイクルメソッドの順序を統一する
-- SerializeFieldを使用する際は、適切なアクセス修飾子を設定する
+- `[SerializeField]` を使用する際は `private` を明示する
 - MonoBehaviourを継承するクラスでは、コンストラクタを使用しない
-- Destroy()ではなく、適切にライフサイクルを管理する
+- シングルトンには `DontDestroyOnLoad` を使用しない（1シーン構成のため不要）
 
 ## パフォーマンス考慮事項
 - Update()内での重い処理は避ける
 - string連結は StringBuilder を使用する
-- Find系メソッドの使用は禁止
-
-## デザインパターン実装方針
-
-### 教材としての品質
-- 各パターンは独立したデモシーンで動作させる
-- パターンの意図と構造が視覚的に理解できるようにする
-- インタラクティブな操作でパターンの動作を確認できるようにする
-- コードは教材として読みやすく整理する
-
-### 視覚化ガイドライン
-- 色分け: 生成=青、構造=緑、振る舞い=オレンジ
-- アニメーション: オブジェクト生成や状態変化を視覚的に表現
-- 画面内にコンソールログを表示し、パターンの動作を可視化する
-
-### デバッグコード
-- `Debug.Log` は画面内ログ表示に置き換える（共通UIシステム使用）
-
+- Find系メソッドの頻繁な使用を避ける
+- `Shader.Find()` は初期化時のみ使用する（毎フレーム呼び出し禁止）

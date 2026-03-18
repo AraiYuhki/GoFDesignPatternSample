@@ -57,10 +57,16 @@ namespace GoFPatterns.Patterns.Visualization {
             return StartCoroutine(PulseCoroutine(pulseColor, duration));
         }
 
+        /// <summary>
+        /// 毎フレーム接続位置を更新する
+        /// </summary>
         private void LateUpdate() {
             UpdatePositions();
         }
 
+        /// <summary>
+        /// 接続元・接続先の座標に基づいて線と矢印頭の位置を更新する
+        /// </summary>
         private void UpdatePositions() {
             if (fromElement == null || toElement == null) {
                 return;
@@ -88,11 +94,20 @@ namespace GoFPatterns.Patterns.Visualization {
             }
         }
 
+        /// <summary>
+        /// 要素のスケールからおおよその半径を計算する
+        /// </summary>
+        /// <param name="element">対象のVisualElement</param>
+        /// <returns>要素の半径</returns>
         private static float GetElementRadius(VisualElement element) {
             Vector3 scale = element.transform.localScale;
             return Mathf.Max(scale.x, scale.y) * 0.5f;
         }
 
+        /// <summary>
+        /// LineRendererを生成して設定する
+        /// </summary>
+        /// <param name="color">線の色</param>
         private void SetupLineRenderer(Color color) {
             lineRenderer = gameObject.AddComponent<LineRenderer>();
             lineRenderer.positionCount = 2;
@@ -105,6 +120,10 @@ namespace GoFPatterns.Patterns.Visualization {
             lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         }
 
+        /// <summary>
+        /// 矢印頭のSpriteRendererを生成して設定する
+        /// </summary>
+        /// <param name="color">矢印の色</param>
         private void SetupArrowHead(Color color) {
             var arrowGo = new GameObject("ArrowHead");
             arrowGo.transform.SetParent(transform, false);
@@ -115,6 +134,11 @@ namespace GoFPatterns.Patterns.Visualization {
             arrowHead.sortingOrder = 0;
         }
 
+        /// <summary>
+        /// 色をパルスアニメーションさせるコルーチン
+        /// </summary>
+        /// <param name="pulseColor">パルス色</param>
+        /// <param name="duration">アニメーション時間（秒）</param>
         private IEnumerator PulseCoroutine(Color pulseColor, float duration) {
             Color original = CurrentColor;
             float half = duration * 0.5f;

@@ -2,7 +2,8 @@
     "name": "GoFPatterns.Patterns",
     "rootNamespace": "GoFPatterns.Patterns",
     "references": [
-        "GoFPatterns.Core"
+        "GoFPatterns.Core",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

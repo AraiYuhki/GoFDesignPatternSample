@@ -1,4 +1,5 @@
 using GoFPatterns.Core;
+using GoFPatterns.Patterns;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,6 +38,9 @@ namespace GoFPatterns.UI {
         /// <summary>現在表示中のパターンID</summary>
         private string currentPatternId;
 
+        /// <summary>
+        /// 起動時にボタンイベントを登録する
+        /// </summary>
         private void Start() {
             if (startDemoButton != null) {
                 startDemoButton.onClick.AddListener(OnStartDemoClicked);

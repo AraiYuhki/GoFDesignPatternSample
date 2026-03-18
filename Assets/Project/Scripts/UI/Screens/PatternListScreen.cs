@@ -1,4 +1,5 @@
 using GoFPatterns.Core;
+using GoFPatterns.Patterns;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

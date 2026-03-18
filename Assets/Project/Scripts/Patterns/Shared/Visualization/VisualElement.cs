@@ -54,12 +54,12 @@ namespace GoFPatterns.Patterns.Visualization {
 
         /// <summary>位置をアニメーション付きで移動する</summary>
         public Coroutine MoveTo(Vector2 target, float duration) {
-            return StartCoroutine(TweenUtility.MoveTo(transform, new Vector3(target.x, target.y, 0f), duration));
+            return StartCoroutine(TweenUtility.MoveToCoroutine(transform, new Vector3(target.x, target.y, 0f), duration));
         }
 
         /// <summary>色をパルスアニメーションさせる</summary>
         public Coroutine Pulse(Color pulseColor, float duration) {
-            return StartCoroutine(TweenUtility.PulseColor(spriteRenderer, pulseColor, duration));
+            return StartCoroutine(TweenUtility.PulseColorCoroutine(spriteRenderer, pulseColor, duration));
         }
 
         /// <summary>色を即座に設定する</summary>
@@ -81,6 +81,12 @@ namespace GoFPatterns.Patterns.Visualization {
             gameObject.SetActive(visible);
         }
 
+        /// <summary>
+        /// スプライトレンダラーを設定する
+        /// </summary>
+        /// <param name="sprite">使用するスプライト</param>
+        /// <param name="color">初期色</param>
+        /// <param name="scale">スケール</param>
         private void SetupSprite(Sprite sprite, Color color, Vector3 scale) {
             spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = sprite;
@@ -89,6 +95,10 @@ namespace GoFPatterns.Patterns.Visualization {
             transform.localScale = scale;
         }
 
+        /// <summary>
+        /// ラベル用TextMeshProを生成して設定する
+        /// </summary>
+        /// <param name="text">ラベルテキスト（空の場合は生成しない）</param>
         private void SetupLabel(string text) {
             if (string.IsNullOrEmpty(text)) {
                 return;

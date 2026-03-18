@@ -50,6 +50,9 @@ namespace GoFPatterns.UI {
         /// <summary>現在のデモ参照</summary>
         private IPatternDemo currentDemo;
 
+        /// <summary>
+        /// 起動時にボタンイベントとログサービスを購読する
+        /// </summary>
         private void Start() {
             if (playButton != null) {
                 playButton.onClick.AddListener(OnPlayClicked);
@@ -106,6 +109,9 @@ namespace GoFPatterns.UI {
             currentDemo = null;
         }
 
+        /// <summary>
+        /// 毎フレームステップ表示とログ表示を更新する
+        /// </summary>
         private void Update() {
             if (currentDemo == null) {
                 return;
@@ -166,9 +172,23 @@ namespace GoFPatterns.UI {
             }
         }
 
-        private void OnPlayClicked() { currentDemo?.Play(); }
-        private void OnPauseClicked() { currentDemo?.Pause(); }
+        /// <summary>
+        /// 再生ボタン押下時の処理
+        /// </summary>
+        private void OnPlayClicked() {
+            currentDemo?.Play();
+        }
 
+        /// <summary>
+        /// 一時停止ボタン押下時の処理
+        /// </summary>
+        private void OnPauseClicked() {
+            currentDemo?.Pause();
+        }
+
+        /// <summary>
+        /// ステップ送りボタン押下時の処理
+        /// </summary>
         private void OnStepClicked() {
             currentDemo?.StepForward();
             // ステップのログをLogServiceにも流す
@@ -180,16 +200,26 @@ namespace GoFPatterns.UI {
             }
         }
 
+        /// <summary>
+        /// リセットボタン押下時の処理
+        /// </summary>
         private void OnResetClicked() {
             currentDemo?.ResetDemo();
             DemoManager.Instance.LogService.Clear();
             DemoManager.Instance.LogService.Log($"=== {currentDemo?.DisplayName} リセット ===");
         }
 
+        /// <summary>
+        /// 戻るボタン押下時の処理
+        /// </summary>
         private void OnBackClicked() {
             ScreenManager.Instance.GoBack();
         }
 
+        /// <summary>
+        /// 速度スライダー変更時の処理
+        /// </summary>
+        /// <param name="value">スライダー値（0〜1）</param>
         private void OnSpeedChanged(float value) {
             // スライダー値（0.1〜3.0）を間隔に変換する（値が大きいほど速い）
             float interval = Mathf.Lerp(3f, 0.3f, value);
@@ -201,12 +231,17 @@ namespace GoFPatterns.UI {
         /// <summary>
         /// テキストを安全にセットする
         /// </summary>
+        /// <param name="label">対象のテキストコンポーネント</param>
+        /// <param name="value">設定する値</param>
         private static void SetText(TMP_Text label, string value) {
             if (label != null) {
                 label.text = value ?? "";
             }
         }
 
+        /// <summary>
+        /// 破棄時にログサービスの購読を解除する
+        /// </summary>
         private void OnDestroy() {
             if (DemoManager.Instance != null) {
                 DemoManager.Instance.LogService.OnLogAdded -= OnLogAdded;

@@ -34,6 +34,9 @@ namespace GoFPatterns.Patterns.Visualization {
         /// <summary>ビジュアライゼーション要素を配置する親Transformを取得する</summary>
         public Transform VisualRoot => visualRoot;
 
+        /// <summary>
+        /// 起動時にビジュアライゼーション空間を初期化する
+        /// </summary>
         private void Awake() {
             SetupVisualRoot();
             SetupCamera();
@@ -54,12 +57,18 @@ namespace GoFPatterns.Patterns.Visualization {
             }
         }
 
+        /// <summary>
+        /// ビジュアライゼーション要素の親GameObjectを生成する
+        /// </summary>
         private void SetupVisualRoot() {
             var rootGo = new GameObject("VisualizationRoot");
             rootGo.transform.position = WorldOffset;
             visualRoot = rootGo.transform;
         }
 
+        /// <summary>
+        /// 専用の正射影カメラを生成して設定する
+        /// </summary>
         private void SetupCamera() {
             var cameraGo = new GameObject("VisualizationCamera");
             cameraGo.transform.SetParent(visualRoot, false);
@@ -76,6 +85,9 @@ namespace GoFPatterns.Patterns.Visualization {
             renderCamera.tag = "Untagged";
         }
 
+        /// <summary>
+        /// RenderTextureを生成してカメラとRawImageに紐付ける
+        /// </summary>
         private void SetupRenderTexture() {
             renderTexture = new RenderTexture(TextureWidth, TextureHeight, 16);
             renderTexture.antiAliasing = 2;
@@ -86,6 +98,9 @@ namespace GoFPatterns.Patterns.Visualization {
             }
         }
 
+        /// <summary>
+        /// 破棄時にRenderTextureとビジュアライゼーション空間を解放する
+        /// </summary>
         private void OnDestroy() {
             if (renderTexture != null) {
                 renderTexture.Release();

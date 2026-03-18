@@ -23,6 +23,9 @@ namespace GoFPatterns.Core {
         /// <summary>シングルトンインスタンスを取得する</summary>
         public static ScreenManager Instance => instance;
 
+        /// <summary>
+        /// 起動時にシングルトンを設定し、全画面を非表示にして辞書を構築する
+        /// </summary>
         private void Awake() {
             if (instance != null && instance != this) {
                 Destroy(gameObject);
@@ -80,6 +83,9 @@ namespace GoFPatterns.Core {
             return history.Count > 0;
         }
 
+        /// <summary>
+        /// 破棄時にシングルトン参照をクリアする
+        /// </summary>
         private void OnDestroy() {
             if (instance == this) {
                 instance = null;

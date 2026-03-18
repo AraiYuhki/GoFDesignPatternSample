@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using GoFPatterns.Patterns;
+using GoFPatterns.Core;
 using UnityEngine;
 
-namespace GoFPatterns.Core {
+namespace GoFPatterns.Patterns {
     /// <summary>
     /// デモの生成・開始・停止を統括するマネージャー
     /// PatternRepositoryとIPatternDemoを仲介し、デモのライフサイクルを管理する
@@ -34,6 +34,9 @@ namespace GoFPatterns.Core {
         /// <summary>現在実行中のデモを取得する</summary>
         public IPatternDemo CurrentDemo => currentDemoInstance;
 
+        /// <summary>
+        /// 起動時にシングルトンを設定し、デモPrefabの辞書を構築する
+        /// </summary>
         private void Awake() {
             if (instance != null && instance != this) {
                 Destroy(gameObject);
@@ -80,6 +83,9 @@ namespace GoFPatterns.Core {
             currentDemoInstance = null;
         }
 
+        /// <summary>
+        /// 破棄時に実行中のデモを停止しシングルトン参照をクリアする
+        /// </summary>
         private void OnDestroy() {
             StopCurrentDemo();
             if (instance == this) {

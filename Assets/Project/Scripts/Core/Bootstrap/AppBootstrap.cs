@@ -10,6 +10,9 @@ namespace GoFPatterns.Core {
         [SerializeField]
         private string initialScreenId = "list";
 
+        /// <summary>
+        /// 起動時に最初の画面へ遷移する
+        /// </summary>
         private void Start() {
             if (ScreenManager.Instance != null) {
                 ScreenManager.Instance.NavigateTo(initialScreenId);

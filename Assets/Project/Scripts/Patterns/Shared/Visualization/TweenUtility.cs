@@ -11,7 +11,7 @@ namespace GoFPatterns.Patterns.Visualization {
         /// <summary>
         /// 位置を指定時間で移動するコルーチン
         /// </summary>
-        public static IEnumerator MoveTo(Transform target, Vector3 to, float duration, Action onComplete = null) {
+        public static IEnumerator MoveToCoroutine(Transform target, Vector3 to, float duration, Action onComplete = null) {
             Vector3 from = target.localPosition;
             float elapsed = 0f;
             while (elapsed < duration) {
@@ -27,7 +27,7 @@ namespace GoFPatterns.Patterns.Visualization {
         /// <summary>
         /// スケールを指定時間で変更するコルーチン
         /// </summary>
-        public static IEnumerator ScaleTo(Transform target, Vector3 to, float duration, Action onComplete = null) {
+        public static IEnumerator ScaleToCoroutine(Transform target, Vector3 to, float duration, Action onComplete = null) {
             Vector3 from = target.localScale;
             float elapsed = 0f;
             while (elapsed < duration) {
@@ -43,7 +43,7 @@ namespace GoFPatterns.Patterns.Visualization {
         /// <summary>
         /// SpriteRendererの色をパルスアニメーションさせるコルーチン
         /// </summary>
-        public static IEnumerator PulseColor(SpriteRenderer renderer, Color pulseColor, float duration) {
+        public static IEnumerator PulseColorCoroutine(SpriteRenderer renderer, Color pulseColor, float duration) {
             Color original = renderer.color;
             float half = duration * 0.5f;
             float elapsed = 0f;
@@ -67,7 +67,7 @@ namespace GoFPatterns.Patterns.Visualization {
         /// <summary>
         /// SpriteRendererの色を指定時間で変更するコルーチン
         /// </summary>
-        public static IEnumerator ColorTo(SpriteRenderer renderer, Color to, float duration) {
+        public static IEnumerator ColorToCoroutine(SpriteRenderer renderer, Color to, float duration) {
             Color from = renderer.color;
             float elapsed = 0f;
             while (elapsed < duration) {
