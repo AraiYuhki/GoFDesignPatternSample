@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using GoFPatterns.Core;
 using UnityEngine;
@@ -6,18 +7,15 @@ namespace GoFPatterns.Patterns {
     /// <summary>
     /// デモの生成・開始・停止を統括するマネージャー
     /// PatternRepositoryとIPatternDemoを仲介し、デモのライフサイクルを管理する
+    /// PatternDemoAttributeが付与されたクラスをリフレクションで自動検出する
     /// </summary>
     public class DemoManager : MonoBehaviour {
         /// <summary>パターン定義リポジトリ</summary>
         [SerializeField]
         private PatternRepository patternRepository;
 
-        /// <summary>登録されたデモのPrefab一覧</summary>
-        [SerializeField]
-        private BasePatternDemo[] demoPrefabs;
-
-        /// <summary>パターンIDをキーとするデモPrefab辞書</summary>
-        private readonly Dictionary<string, BasePatternDemo> demoPrefabMap = new Dictionary<string, BasePatternDemo>();
+        /// <summary>パターンIDをキーとするデモ型辞書</summary>
+        private readonly Dictionary<string, Type> demoTypeRegistry = new Dictionary<string, Type>();
         /// <summary>現在実行中のデモインスタンス</summary>
         private BasePatternDemo currentDemoInstance;
         /// <summary>ログサービス</summary>
@@ -35,7 +33,7 @@ namespace GoFPatterns.Patterns {
         public IPatternDemo CurrentDemo => currentDemoInstance;
 
         /// <summary>
-        /// 起動時にシングルトンを設定し、デモPrefabの辞書を構築する
+        /// 起動時にシングルトンを設定し、PatternDemoAttributeが付与されたデモ型を自動検出する
         /// </summary>
         private void Awake() {
             if (instance != null && instance != this) {
@@ -43,12 +41,29 @@ namespace GoFPatterns.Patterns {
                 return;
             }
             instance = this;
+            DiscoverDemoTypes();
+        }
 
-            foreach (var prefab in demoPrefabs) {
-                if (prefab != null) {
-                    demoPrefabMap[prefab.PatternId] = prefab;
+        /// <summary>
+        /// ロード済みアセンブリからPatternDemoAttributeを持つ型を検出して登録する
+        /// </summary>
+        private void DiscoverDemoTypes() {
+            var baseType = typeof(BasePatternDemo);
+            var attrType = typeof(PatternDemoAttribute);
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
+                foreach (var type in assembly.GetTypes()) {
+                    if (type.IsAbstract || !baseType.IsAssignableFrom(type)) {
+                        continue;
+                    }
+                    var attrs = type.GetCustomAttributes(attrType, false);
+                    if (attrs.Length == 0) {
+                        continue;
+                    }
+                    var attr = (PatternDemoAttribute)attrs[0];
+                    demoTypeRegistry[attr.PatternId] = type;
                 }
             }
+            Debug.Log($"[DemoManager] {demoTypeRegistry.Count} demo type(s) registered.");
         }
 
         /// <summary>
@@ -59,11 +74,14 @@ namespace GoFPatterns.Patterns {
         public IPatternDemo StartDemo(string patternId) {
             StopCurrentDemo();
 
-            if (!demoPrefabMap.TryGetValue(patternId, out var prefab)) {
+            if (!demoTypeRegistry.TryGetValue(patternId, out var demoType)) {
+                Debug.LogWarning($"[DemoManager] No demo registered for patternId: {patternId}");
                 return null;
             }
 
-            currentDemoInstance = Instantiate(prefab, transform);
+            var demoGo = new GameObject($"[Demo] {patternId}");
+            demoGo.transform.SetParent(transform);
+            currentDemoInstance = (BasePatternDemo)demoGo.AddComponent(demoType);
             currentDemoInstance.Initialize();
             logService.Clear();
             logService.Log($"=== {currentDemoInstance.DisplayName} デモ開始 ===");

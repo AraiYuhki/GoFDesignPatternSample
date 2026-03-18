@@ -32,6 +32,8 @@ namespace GoFPatterns.Patterns {
         public int CurrentStepIndex => scenario.CurrentIndex;
         /// <summary>全ステップ数</summary>
         public int TotalSteps => scenario.TotalSteps;
+        /// <summary>現在のステップを取得する</summary>
+        public DemoStep CurrentStep => scenario.CurrentStep;
 
         /// <summary>
         /// デモを初期化しシナリオを構築する
@@ -89,13 +91,16 @@ namespace GoFPatterns.Patterns {
         /// 1ステップ進める
         /// </summary>
         public void StepForward() {
+            int logCountBefore = logs.Count;
             var step = scenario.ExecuteNext();
             if (step == null) {
                 isPlaying = false;
                 return;
             }
-            string logEntry = FormatLogEntry(step);
-            logs.Add(logEntry);
+            // ステップのラムダがLog()を呼ばなかった場合のみデフォルトエントリを追加する
+            if (logs.Count == logCountBefore) {
+                logs.Add(FormatLogEntry(step));
+            }
             visualization?.Refresh();
         }
 

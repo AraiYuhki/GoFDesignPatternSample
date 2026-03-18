@@ -131,6 +131,10 @@ namespace GoFPatterns.UI {
             int total = currentDemo.TotalSteps;
             SetText(stepLabel, $"Step {current}/{total}");
 
+            if (currentDemo is BasePatternDemo baseDemo) {
+                SetText(stepDescriptionLabel, baseDemo.CurrentStep?.Description ?? "");
+            }
+
             if (stepButton != null) {
                 stepButton.interactable = currentDemo.CanStep;
             }
@@ -190,13 +194,14 @@ namespace GoFPatterns.UI {
         /// ステップ送りボタン押下時の処理
         /// </summary>
         private void OnStepClicked() {
-            currentDemo?.StepForward();
-            // ステップのログをLogServiceにも流す
-            if (currentDemo != null) {
-                var logs = currentDemo.GetCurrentLogs();
-                if (logs.Count > 0) {
-                    DemoManager.Instance.LogService.Log(logs[logs.Count - 1]);
-                }
+            if (currentDemo == null) {
+                return;
+            }
+            int countBefore = currentDemo.GetCurrentLogs().Count;
+            currentDemo.StepForward();
+            var logs = currentDemo.GetCurrentLogs();
+            for (int i = countBefore; i < logs.Count; i++) {
+                DemoManager.Instance.LogService.Log(logs[i]);
             }
         }
 
