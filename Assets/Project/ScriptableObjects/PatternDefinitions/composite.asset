@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8bd0b7fa66b400686075734ad2c576, type: 3}
+  m_Name: composite
+  m_EditorClassIdentifier: GoFPatterns.Core::GoFPatterns.Core.PatternDefinition
+  patternId: composite
+  displayName: Composite
+  displayNameJp: コンポジット
+  category: 1
+  summary: オブジェクトをツリー構造に組み立て、個々と集合を同一視して扱う
+  description: Compositeパターンはオブジェクトをツリー構造で構成し、個々と複合オブジェクトを同じインターフェースで扱えるようにします。
+  problemToSolve: ファイルシステム、UIコンポーネント階層、組織図
+  whenToUse: 部分-全体の階層構造がある場合
+  advantages: ツリー構造を統一的に扱える
+  disadvantages: 設計が過度に汎用化される場合がある
+  participants: []
+  relatedPatternIds: []
+  stepDescriptions: []

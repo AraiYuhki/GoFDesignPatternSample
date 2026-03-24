@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8bd0b7fa66b400686075734ad2c576, type: 3}
+  m_Name: visitor
+  m_EditorClassIdentifier: GoFPatterns.Core::GoFPatterns.Core.PatternDefinition
+  patternId: visitor
+  displayName: Visitor
+  displayNameJp: ビジター
+  category: 2
+  summary: データ構造と処理を分離し、新しい処理を既存クラスを変更せずに追加する
+  description: Visitorパターンはオブジェクト構造の要素に対して実行する操作を別クラスに分離します。
+  problemToSolve: AST解析、ドキュメント変換、図形の面積計算
+  whenToUse: データ構造は安定しているが、操作を頻繁に追加したい場合
+  advantages: 新しい操作の追加が容易
+  disadvantages: 新しい要素型の追加が困難
+  participants: []
+  relatedPatternIds: []
+  stepDescriptions: []

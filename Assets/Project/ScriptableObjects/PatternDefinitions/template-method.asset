@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8bd0b7fa66b400686075734ad2c576, type: 3}
+  m_Name: template-method
+  m_EditorClassIdentifier: GoFPatterns.Core::GoFPatterns.Core.PatternDefinition
+  patternId: template-method
+  displayName: Template Method
+  displayNameJp: テンプレートメソッド
+  category: 2
+  summary: アルゴリズムの骨格を定義し、一部のステップをサブクラスに委ねる
+  description: Template Methodパターンはアルゴリズムの構造をスーパークラスで定義し、具体的なステップの実装をサブクラスに委譲します。
+  problemToSolve: データマイニング、ドキュメント生成
+  whenToUse: 重複コードを排除したい場合
+  advantages: 重複コードの排除、アルゴリズムの構造を統一
+  disadvantages: ステップが多いと理解しづらい
+  participants: []
+  relatedPatternIds: []
+  stepDescriptions: []

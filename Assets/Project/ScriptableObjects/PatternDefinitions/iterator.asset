@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8bd0b7fa66b400686075734ad2c576, type: 3}
+  m_Name: iterator
+  m_EditorClassIdentifier: GoFPatterns.Core::GoFPatterns.Core.PatternDefinition
+  patternId: iterator
+  displayName: Iterator
+  displayNameJp: イテレーター
+  category: 2
+  summary: コレクションの内部構造を公開せずに要素に順次アクセスする方法を提供する
+  description: Iteratorパターンはコレクションの内部表現を公開することなく、その要素に順次アクセスする手段を提供します。
+  problemToSolve: リスト、ツリー、グラフの走査
+  whenToUse: コレクションの内部構造を隠蔽したい場合
+  advantages: コレクションと走査ロジックを分離できる
+  disadvantages: 単純なコレクションには過剰
+  participants: []
+  relatedPatternIds: []
+  stepDescriptions: []

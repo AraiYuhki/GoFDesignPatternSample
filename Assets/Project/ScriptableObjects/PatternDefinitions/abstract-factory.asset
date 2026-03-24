@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8bd0b7fa66b400686075734ad2c576, type: 3}
+  m_Name: abstract-factory
+  m_EditorClassIdentifier: GoFPatterns.Core::GoFPatterns.Core.PatternDefinition
+  patternId: abstract-factory
+  displayName: Abstract Factory
+  displayNameJp: アブストラクトファクトリー
+  category: 0
+  summary: 関連するオブジェクト群を具象クラスを指定せずに生成するインターフェースを提供する
+  description: Abstract Factoryパターンは関連する一連のオブジェクトを、その具象クラスを指定することなく生成するためのインターフェースを提供します。
+  problemToSolve: UIテーマ、クロスプラットフォームUI
+  whenToUse: 製品ファミリーの一貫性が必要な場合
+  advantages: 製品ファミリー間の一貫性を保証できる
+  disadvantages: 新しい種類の製品追加が困難
+  participants: []
+  relatedPatternIds: []
+  stepDescriptions: []

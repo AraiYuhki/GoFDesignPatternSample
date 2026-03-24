@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8bd0b7fa66b400686075734ad2c576, type: 3}
+  m_Name: builder
+  m_EditorClassIdentifier: GoFPatterns.Core::GoFPatterns.Core.PatternDefinition
+  patternId: builder
+  displayName: Builder
+  displayNameJp: ビルダー
+  category: 0
+  summary: 複雑なオブジェクトの構築過程を分離し、同じ構築手順で異なる表現を生成する
+  description: Builderパターンは複雑なオブジェクトの構築をステップごとに行い、同じ構築プロセスで異なる表現のオブジェクトを生成できるようにします。
+  problemToSolve: キャラクタービルド、ドキュメント生成、クエリ構築
+  whenToUse: コンストラクタの引数が多い場合
+  advantages: 構築過程を細かく制御できる
+  disadvantages: クラス数が増加する
+  participants: []
+  relatedPatternIds: []
+  stepDescriptions: []

@@ -88,6 +88,11 @@ namespace GoFPatterns.UI {
                 return;
             }
 
+            // ビジュアライゼーションレンダラーにRawImageをバインドする
+            if (DemoManager.Instance.VisualizationRenderer != null && visualizationDisplay != null) {
+                DemoManager.Instance.VisualizationRenderer.SetTargetImage(visualizationDisplay);
+            }
+
             currentDemo = DemoManager.Instance.StartDemo(patternId);
             if (currentDemo == null) {
                 return;

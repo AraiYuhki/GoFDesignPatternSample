@@ -89,7 +89,7 @@ namespace GoFPatterns.Patterns.Visualization {
 
             if (arrowHead != null) {
                 arrowHead.transform.position = end + direction * ArrowHeadSize * 0.5f;
-                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
                 arrowHead.transform.rotation = Quaternion.Euler(0f, 0f, angle);
             }
         }

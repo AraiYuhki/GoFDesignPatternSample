@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8bd0b7fa66b400686075734ad2c576, type: 3}
+  m_Name: prototype
+  m_EditorClassIdentifier: GoFPatterns.Core::GoFPatterns.Core.PatternDefinition
+  patternId: prototype
+  displayName: Prototype
+  displayNameJp: プロトタイプ
+  category: 0
+  summary: 既存のオブジェクトをコピーして新しいオブジェクトを生成する
+  description: Prototypeパターンは既存のインスタンスをプロトタイプとして複製することで新しいオブジェクトを生成します。
+  problemToSolve: 敵のバリエーション生成、設定テンプレート
+  whenToUse: 生成コストが高い場合
+  advantages: 生成コストを削減できる
+  disadvantages: 深いコピーが複雑になる場合がある
+  participants: []
+  relatedPatternIds: []
+  stepDescriptions: []

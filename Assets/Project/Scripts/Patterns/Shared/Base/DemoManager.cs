@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using GoFPatterns.Core;
+using GoFPatterns.Patterns.Visualization;
 using UnityEngine;
 
 namespace GoFPatterns.Patterns {
@@ -13,11 +14,18 @@ namespace GoFPatterns.Patterns {
         /// <summary>パターン定義リポジトリ</summary>
         [SerializeField]
         private PatternRepository patternRepository;
+        /// <summary>ビジュアライゼーションレンダラー</summary>
+        [SerializeField]
+        private VisualizationRenderer visualizationRenderer;
 
         /// <summary>パターンIDをキーとするデモ型辞書</summary>
         private readonly Dictionary<string, Type> demoTypeRegistry = new Dictionary<string, Type>();
+        /// <summary>パターンIDをキーとするビジュアライゼーション型辞書</summary>
+        private readonly Dictionary<string, Type> visualizationTypeRegistry = new Dictionary<string, Type>();
         /// <summary>現在実行中のデモインスタンス</summary>
         private BasePatternDemo currentDemoInstance;
+        /// <summary>現在のビジュアライゼーション</summary>
+        private BasePatternVisualization currentVisualization;
         /// <summary>ログサービス</summary>
         private readonly LogService logService = new LogService();
 
@@ -31,6 +39,8 @@ namespace GoFPatterns.Patterns {
         public LogService LogService => logService;
         /// <summary>現在実行中のデモを取得する</summary>
         public IPatternDemo CurrentDemo => currentDemoInstance;
+        /// <summary>ビジュアライゼーションレンダラーを取得する</summary>
+        public VisualizationRenderer VisualizationRenderer => visualizationRenderer;
 
         /// <summary>
         /// 起動時にシングルトンを設定し、PatternDemoAttributeが付与されたデモ型を自動検出する
@@ -42,6 +52,7 @@ namespace GoFPatterns.Patterns {
             }
             instance = this;
             DiscoverDemoTypes();
+            DiscoverVisualizationTypes();
         }
 
         /// <summary>
@@ -67,6 +78,28 @@ namespace GoFPatterns.Patterns {
         }
 
         /// <summary>
+        /// ロード済みアセンブリからPatternVisualizationAttributeを持つ型を検出して登録する
+        /// </summary>
+        private void DiscoverVisualizationTypes() {
+            var baseType = typeof(BasePatternVisualization);
+            var attrType = typeof(PatternVisualizationAttribute);
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
+                foreach (var type in assembly.GetTypes()) {
+                    if (type.IsAbstract || !baseType.IsAssignableFrom(type)) {
+                        continue;
+                    }
+                    var attrs = type.GetCustomAttributes(attrType, false);
+                    if (attrs.Length == 0) {
+                        continue;
+                    }
+                    var attr = (PatternVisualizationAttribute)attrs[0];
+                    visualizationTypeRegistry[attr.PatternId] = type;
+                }
+            }
+            Debug.Log($"[DemoManager] {visualizationTypeRegistry.Count} visualization type(s) registered.");
+        }
+
+        /// <summary>
         /// 指定パターンIDのデモを開始する
         /// </summary>
         /// <param name="patternId">開始するパターンのID</param>
@@ -86,7 +119,27 @@ namespace GoFPatterns.Patterns {
             logService.Clear();
             logService.Log($"=== {currentDemoInstance.DisplayName} デモ開始 ===");
 
+            BindVisualization(patternId);
+
             return currentDemoInstance;
+        }
+
+        /// <summary>
+        /// パターンIDに対応するビジュアライゼーションを検索してバインドする
+        /// </summary>
+        /// <param name="patternId">パターンID</param>
+        private void BindVisualization(string patternId) {
+            currentVisualization = null;
+            if (visualizationRenderer == null) {
+                return;
+            }
+            if (!visualizationTypeRegistry.TryGetValue(patternId, out var visType)) {
+                return;
+            }
+            var vis = (BasePatternVisualization)System.Activator.CreateInstance(visType);
+            vis.SetRenderer(visualizationRenderer);
+            currentDemoInstance.BindVisualization(vis);
+            currentVisualization = vis;
         }
 
         /// <summary>
@@ -97,6 +150,13 @@ namespace GoFPatterns.Patterns {
                 return;
             }
             currentDemoInstance.Stop();
+            if (currentVisualization != null) {
+                currentVisualization.Clear();
+                currentVisualization = null;
+            }
+            if (visualizationRenderer != null) {
+                visualizationRenderer.ClearAll();
+            }
             Destroy(currentDemoInstance.gameObject);
             currentDemoInstance = null;
         }

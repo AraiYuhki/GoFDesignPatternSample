@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8bd0b7fa66b400686075734ad2c576, type: 3}
+  m_Name: flyweight
+  m_EditorClassIdentifier: GoFPatterns.Core::GoFPatterns.Core.PatternDefinition
+  patternId: flyweight
+  displayName: Flyweight
+  displayNameJp: フライウェイト
+  category: 1
+  summary: 多数の類似オブジェクトで共有可能な部分を抽出し、メモリを節約する
+  description: Flyweightパターンはオブジェクトの内部状態を共有し、外部状態を分離することでメモリを節約します。
+  problemToSolve: 森の木々、文字のフォント、パーティクル
+  whenToUse: 大量の類似オブジェクトがメモリを圧迫する場合
+  advantages: メモリ使用量を大幅に削減できる
+  disadvantages: コードが複雑になる
+  participants: []
+  relatedPatternIds: []
+  stepDescriptions: []

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8bd0b7fa66b400686075734ad2c576, type: 3}
+  m_Name: chain-of-responsibility
+  m_EditorClassIdentifier: GoFPatterns.Core::GoFPatterns.Core.PatternDefinition
+  patternId: chain-of-responsibility
+  displayName: Chain of Responsibility
+  displayNameJp: チェーンオブレスポンシビリティ
+  category: 2
+  summary: リクエストを処理するオブジェクトのチェーンを構成し、順に処理を委譲する
+  description: Chain of Responsibilityパターンはリクエストの送信者と受信者を分離し、複数のハンドラを連鎖させます。
+  problemToSolve: サポートチケット、イベント処理、承認フロー
+  whenToUse: リクエストの処理者を動的に決定したい場合
+  advantages: 送信者と受信者の結合を低減
+  disadvantages: リクエストが処理されない可能性がある
+  participants: []
+  relatedPatternIds: []
+  stepDescriptions: []

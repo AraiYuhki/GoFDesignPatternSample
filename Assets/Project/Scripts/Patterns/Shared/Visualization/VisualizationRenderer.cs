@@ -43,6 +43,17 @@ namespace GoFPatterns.Patterns.Visualization {
             SetupRenderTexture();
         }
 
+        /// <summary>
+        /// 実行時にRawImageをバインドしてRenderTextureを接続する
+        /// </summary>
+        /// <param name="rawImage">表示先のRawImage</param>
+        public void SetTargetImage(RawImage rawImage) {
+            targetRawImage = rawImage;
+            if (targetRawImage != null && renderTexture != null) {
+                targetRawImage.texture = renderTexture;
+            }
+        }
+
         /// <summary>ビジュアライゼーション空間の全オブジェクトを削除する</summary>
         public void ClearAll() {
             if (visualRoot == null) {

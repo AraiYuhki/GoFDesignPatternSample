@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8bd0b7fa66b400686075734ad2c576, type: 3}
+  m_Name: adapter
+  m_EditorClassIdentifier: GoFPatterns.Core::GoFPatterns.Core.PatternDefinition
+  patternId: adapter
+  displayName: Adapter
+  displayNameJp: アダプター
+  category: 1
+  summary: 互換性のないインターフェース同士を接続し、協調動作させる
+  description: Adapterパターンは既存クラスのインターフェースをクライアントが期待する別のインターフェースに変換します。
+  problemToSolve: レガシーAPI統合、サードパーティライブラリ連携
+  whenToUse: 既存クラスのインターフェースが要件と合わない場合
+  advantages: 既存クラスを再利用できる
+  disadvantages: 全体の複雑さが増す
+  participants: []
+  relatedPatternIds: []
+  stepDescriptions: []

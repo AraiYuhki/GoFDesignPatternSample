@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using GoFPatterns.Core;
 using GoFPatterns.Patterns;
+using GoFPatterns.Patterns.Visualization;
 using GoFPatterns.UI;
 using TMPro;
 using UnityEditor;
@@ -61,6 +62,8 @@ namespace GoFPatterns.Editor {
             // Managers
             var managersGo = new GameObject("[Managers]");
             var demoManager = managersGo.AddComponent<DemoManager>();
+            var vizRenderer = managersGo.AddComponent<VisualizationRenderer>();
+            SetObjField(demoManager, "visualizationRenderer", vizRenderer);
 
             // Panels
             var listPanel = CreatePatternListPanel(canvasGo.transform);
@@ -99,6 +102,7 @@ namespace GoFPatterns.Editor {
             var hlg = filterGo.AddComponent<HorizontalLayoutGroup>();
             hlg.childForceExpandWidth = true;
             hlg.childForceExpandHeight = true;
+            hlg.childControlWidth = true;
             hlg.spacing = 4f;
             CreateButton(filterGo.transform, "AllButton", "全て");
             CreateButton(filterGo.transform, "CreationalButton", "生成");
@@ -295,6 +299,7 @@ namespace GoFPatterns.Editor {
             var vlg = content.AddComponent<VerticalLayoutGroup>();
             vlg.childForceExpandWidth = true;
             vlg.childForceExpandHeight = false;
+            vlg.childControlWidth = true;
             vlg.spacing = 4f;
             vlg.padding = new RectOffset(4, 4, 4, 4);
             var csf = content.AddComponent<ContentSizeFitter>();

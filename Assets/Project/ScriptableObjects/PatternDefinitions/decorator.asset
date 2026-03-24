@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8bd0b7fa66b400686075734ad2c576, type: 3}
+  m_Name: decorator
+  m_EditorClassIdentifier: GoFPatterns.Core::GoFPatterns.Core.PatternDefinition
+  patternId: decorator
+  displayName: Decorator
+  displayNameJp: デコレーター
+  category: 1
+  summary: オブジェクトに動的に新しい責任を追加し、機能を柔軟に拡張する
+  description: Decoratorパターンは既存オブジェクトをラップして新しい振る舞いを動的に追加します。
+  problemToSolve: 武器の強化、ストリームのバッファリング/暗号化
+  whenToUse: サブクラス化による静的な拡張が不便な場合
+  advantages: 継承より柔軟な拡張が可能
+  disadvantages: ラッパーの層が深くなると複雑
+  participants: []
+  relatedPatternIds: []
+  stepDescriptions: []

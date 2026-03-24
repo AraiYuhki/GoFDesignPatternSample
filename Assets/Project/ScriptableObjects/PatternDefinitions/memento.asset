@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8bd0b7fa66b400686075734ad2c576, type: 3}
+  m_Name: memento
+  m_EditorClassIdentifier: GoFPatterns.Core::GoFPatterns.Core.PatternDefinition
+  patternId: memento
+  displayName: Memento
+  displayNameJp: メメント
+  category: 2
+  summary: オブジェクトの内部状態を保存・復元し、Undo機能などを実現する
+  description: Mementoパターンはオブジェクトの内部状態のスナップショットを保存し、後から復元できるようにします。
+  problemToSolve: テキストエディタのUndo、ゲームのセーブ/ロード
+  whenToUse: Undo/Redo機能が必要な場合
+  advantages: カプセル化を維持しつつ状態を保存できる
+  disadvantages: メモリ消費が大きくなる場合がある
+  participants: []
+  relatedPatternIds: []
+  stepDescriptions: []
